@@ -1,4 +1,6 @@
 import 'package:elahan_kscs/auth/screen/logine_screen.dart';
+import 'package:elahan_kscs/custom_routes.dart';
+import 'package:elahan_kscs/menu/inventarisasi/inventarisasi.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,6 +26,9 @@ class MyApp extends StatelessWidget {
         )
       ),
       home: LoginScreen(),
+      routes: {
+        CustomRoutes.inventarisasi : (context) => Inventarisasi(),
+      },
     );
   }
 }

@@ -13,6 +13,7 @@ class DonutChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 250,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: Colors.white,

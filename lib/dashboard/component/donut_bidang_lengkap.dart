@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class DonutChartBidang extends StatelessWidget {
+class DonutBidangLengkap extends StatelessWidget {
   var _tooltipBehavior;
-  DonutChartBidang({Key? key}) : super(key: key);
+  DonutBidangLengkap({Key? key}) : super(key: key);
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class DonutChartBidang extends StatelessWidget {
           DoughnutSeries<DataLuasTanah, String>(
             dataSource: dataKategoriCard(),
             xValueMapper: (DataLuasTanah data, _) => data.bebas,
-            yValueMapper: (DataLuasTanah data, _) => data.belumBebas,
+            yValueMapper: (DataLuasTanah data, _) => data.belumLengkap,
             dataLabelSettings: const DataLabelSettings(isVisible: true),
             enableTooltip: true,
           )
@@ -48,19 +48,19 @@ class DonutChartBidang extends StatelessWidget {
 List<DataLuasTanah> dataKategoriCard() {
   var chartData = <DataLuasTanah>[];
   var listData = [
-    {'Luas': 22, 'label': 'Bebas'},
-    {'Luas': 78, 'label': 'Belum Bebas'},
+    {'bidang': 22, 'label': 'Lengkap'},
+    {'bidang': 78, 'label': 'Belum Lengkap'},
   ];
   for (var i = 0; i < listData.length; i++) {
     chartData.add(DataLuasTanah(
         bebas: listData[i]['label'].toString(),
-        belumBebas: double.parse(listData[i]['Luas'].toString())));
+        belumLengkap: double.parse(listData[i]['bidang'].toString())));
   }
   return chartData;
 }
 
 class DataLuasTanah {
   final String? bebas;
-  final double? belumBebas;
-  DataLuasTanah({this.bebas, this.belumBebas});
+  final double? belumLengkap;
+  DataLuasTanah({this.bebas, this.belumLengkap});
 }

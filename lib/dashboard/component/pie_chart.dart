@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class PieChartComponent extends StatelessWidget {
-  var _chartData;
-  var _tooltipBehavior;
+
   PieChartComponent({Key? key}) : super(key: key);
 
-  void initState() {
-    _chartData = getChartData();
-    _tooltipBehavior = TooltipBehavior(enable: true);
-  }
 
   @override
   Widget build(BuildContext context) {
+    var _chartData;
+    var _tooltipBehavior;
+    @override
+    void initState() {
+      _chartData = getChartData();
+      _tooltipBehavior = TooltipBehavior(enable: true);
+    }
+
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),

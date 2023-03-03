@@ -1,6 +1,8 @@
 import 'package:elahan_kscs/profile/profil_user.dart';
 import 'package:flutter/material.dart';
 
+import '../constant.dart';
+
 class MyAppBar extends StatelessWidget with PreferredSizeWidget{
   final String? judul;
   MyAppBar({super.key, this.judul});
@@ -12,7 +14,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget{
     return PreferredSize(
       preferredSize: preferredSize,
       child: AppBar(
-        backgroundColor: const Color(0xff1F7093),
+        backgroundColor: primaryColor,
         leading: Padding(
           padding: const EdgeInsets.all(10),
           child: ClipRRect(
