@@ -38,16 +38,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                   SliderCard(),
                   SizedBox(height: 10,),
-
-                  ProgresTanahAll(),
-                  SizedBox(height: 10,),
-
+                  
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Center(child: Text('Klasifikasi Jenis Tanah per Kabupaten', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),),
+                  ),
                   KlasifikasiJenisTanah(),
                   SizedBox(height: 10,),
 
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Center(child: Text('Total Progres Keseluruhan', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),),
+                  ),
+                  ProgresTanahAll(),
+                  SizedBox(height: 10,),
+                  
                   TotalProgresKeseluruhan(),
                   SizedBox(height: 10,),
-
                 ],
               ),
             ),
