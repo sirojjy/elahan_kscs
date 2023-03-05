@@ -1,4 +1,5 @@
 import 'package:elahan_kscs/appBar/appBar.dart';
+import 'package:elahan_kscs/custom_routes.dart';
 import 'package:flutter/material.dart';
 
 class Inventarisasi extends StatefulWidget {
@@ -9,32 +10,42 @@ class Inventarisasi extends StatefulWidget {
 }
 
 class _InventarisasiState extends State<Inventarisasi> {
-  final List<String> namaPenerima = ['AHMAD YUSUF','BUDI UTOMO','DANDI PARWONO','EKA KURNIAWATI'];
-  final List<String> ktp = ['1024785947818','100023754658192','100200195847382','101000238475829'];
-  final List<String> desa = ['ANYAR','ANYAR','ANYAR','ANYAR'];
-  final List<String> status = ['Inventarisasi','Inventarisasi','Musyawarah','Pembayaran'];
   @override
   Widget build(BuildContext context) {
     return SafeArea(child:
     Scaffold(
-      appBar: MyAppBar(judul: 'Inventarisasi',),
+      appBar: MyAppBar(judul:'Inventarisasi',),
       body: Container(
         child: ListView.builder(
+            itemCount: inventarisasi.length,
             itemBuilder: (context, index) {
               return Card(
                 child: ListTile(
+                  onTap: (){
+                    Navigator.pushNamed(context, CustomRoutes.detailInventarisasi);
+                  },
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(''),
-                      Text(
-                        '',
+                      Text('${inventarisasi[index].namaPenerima}'),
+                      Text('KTP : ${inventarisasi[index].ktp}',
                         style: const TextStyle(fontSize: 14),
                       ),
-                      // Text(
-                      //   '${state.data[index].jenisDok}',
-                      //   style: const TextStyle(fontSize: 14),
-                      // ),
+                      Text(
+                        'Desa :${inventarisasi[index].desa}',
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  ),
+                  trailing: Wrap(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 2, horizontal: 3),
+                        decoration: BoxDecoration(color: Colors.redAccent),
+                        child: Text(inventarisasi[index].issue, style: TextStyle(color: Colors.white),),
+                      ),
+                      SizedBox(width: 5,),
+                      Text('${inventarisasi[index].status}')
                     ],
                   ),
                 ),
@@ -47,16 +58,23 @@ class _InventarisasiState extends State<Inventarisasi> {
 }
 
 class DaftarInventarisasi{
-  String? namaPenerima;
-  String? ktp;
-  String? desa;
-  String? status;
-  DaftarInventarisasi({this.namaPenerima, this.ktp, this.desa, this.status});
+  String namaPenerima;
+  String ktp;
+  String desa;
+  String status;
+  String issue;
+  DaftarInventarisasi({
+    required this.namaPenerima,
+    required this.ktp,
+    required this.desa,
+    required this.issue,
+    required this.status});
 }
 
 List<DaftarInventarisasi> inventarisasi = [
-  DaftarInventarisasi(namaPenerima: 'AHMAD YUSUF', ktp: '1024785947818',desa: 'ANYAR', status: 'Inventarisasi'),
-  DaftarInventarisasi(namaPenerima: 'BUDI UTOMO', ktp: '1024785947818',desa: 'ANYAR', status: 'Inventarisasi'),
-  DaftarInventarisasi(namaPenerima: 'DANDI PARWONO', ktp: '1024785947818',desa: 'ANYAR', status: 'Inventarisasi'),
-  DaftarInventarisasi(namaPenerima: 'EKA KURNIAWATI', ktp: '1024785947818',desa: 'ANYAR', status: 'Inventarisasi'),
+  // DaftarInventarisasi(namaPenerima: "namaPenerima", ktp: "ktp", desa: "desa", issue: "issue", status: "status"),
+  DaftarInventarisasi(namaPenerima: 'AHMAD YUSUF', ktp: '1024785947818',desa: 'ANYAR',issue: '0', status: 'Inventarisasi'),
+  DaftarInventarisasi(namaPenerima: 'BUDI UTOMO', ktp: '1024785947818',desa: 'ANYAR',issue: '2', status: 'Inventarisasi'),
+  DaftarInventarisasi(namaPenerima: 'DANDI PARWONO', ktp: '1024785947818',desa: 'ANYAR',issue: '1', status: 'Inventarisasi'),
+  DaftarInventarisasi(namaPenerima: 'EKA KURNIAWATI', ktp: '1024785947818',desa: 'ANYAR',issue: '1', status: 'Inventarisasi'),
 ];
