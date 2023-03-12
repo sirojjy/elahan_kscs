@@ -9,7 +9,9 @@ const users = {
 };
 
 class LoginScreen extends StatelessWidget {
-  Duration get loginTime => Duration(milliseconds: 225);
+  const LoginScreen({super.key});
+
+  Duration get loginTime => const Duration(milliseconds: 60);
 
   Future<String?> _authUser(LoginData data) {
     debugPrint('Name: ${data.name}, Password: ${data.password}');
@@ -47,6 +49,11 @@ class LoginScreen extends StatelessWidget {
       title: 'E LAHAN',
       logo: const AssetImage('assets/images/logo_kscs.png'),
       onLogin: _authUser,
+      userType: LoginUserType.name,
+      // userValidator: FormFieldValidator,
+      messages: LoginMessages(
+        userHint: 'Username',
+      ),
       // onSignup: _signupUser,
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(

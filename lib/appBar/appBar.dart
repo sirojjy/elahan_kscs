@@ -1,4 +1,4 @@
-import 'package:elahan_kscs/profile/profil_user.dart';
+import 'package:elahan_kscs/profile/screen/profil_user.dart';
 import 'package:flutter/material.dart';
 
 import '../constant.dart';

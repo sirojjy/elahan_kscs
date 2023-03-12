@@ -20,7 +20,7 @@ class _SliderCardState extends State<SliderCard> {
   Widget build(BuildContext context) {
     return ListView(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       children: [
         SizedBox(
           height: 150,

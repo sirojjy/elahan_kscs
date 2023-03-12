@@ -1,7 +1,7 @@
-import 'package:elahan_kscs/auth/screen/logine_screen.dart';
+import 'package:elahan_kscs/auth/screen/login_screen.dart';
 import 'package:elahan_kscs/custom_routes.dart';
-import 'package:elahan_kscs/menu/inventarisasi/detail_inven.dart';
-import 'package:elahan_kscs/menu/inventarisasi/inventarisasi.dart';
+import 'package:elahan_kscs/menu/inventarisasi/screen/detail_inven.dart';
+import 'package:elahan_kscs/menu/inventarisasi/screen/inventarisasi.dart';
 import 'package:flutter/material.dart';
 
 void main() {
