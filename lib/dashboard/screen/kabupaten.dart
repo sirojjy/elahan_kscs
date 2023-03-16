@@ -1,5 +1,8 @@
+import 'package:elahan_kscs/dashboard/bloc/dashboard_bloc.dart';
 import 'package:elahan_kscs/dashboard/component/slider_card_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SliderCard extends StatefulWidget {
   const SliderCard({Key? key}) : super(key: key);
@@ -15,6 +18,20 @@ class _SliderCardState extends State<SliderCard> {
   );
 
   late TabController _tabController;
+  SharedPreferences? pref;
+
+  @override
+  void initState() {
+    // BlocProvider.of<DashboardBloc>(context).add(OnDashboardEvent());
+    getPref();
+    super.initState();
+  }
+
+  Future<void> getPref() async {
+    pref = await SharedPreferences.getInstance();
+    setState(() {});
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,35 +39,42 @@ class _SliderCardState extends State<SliderCard> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       children: [
-        SizedBox(
-          height: 150,
-          child: PageView(
-            scrollDirection: Axis.horizontal,
-            physics: const PageScrollPhysics(),
-            controller: _controller,
-            children:  [
-              SliderCardComponent(
-                  titleCard: 'KABUPATEN LEBAK',
-                  jumlahBidang: '2',
-                  jumlahLuas: '500',
-                  jumlahNilai: '500000000',
-                  color: const Color(0x0ff2da69b)),
-              SliderCardComponent(
-                  titleCard: 'KABUPATEN SERANG',
-                  jumlahBidang: '2',
-                  jumlahLuas: '500',
-                  jumlahNilai: '500000000',
-                  color: const Color(0x0ff34C5D8)),
-              SliderCardComponent(
-                  titleCard: 'KABUPATEN TANGERANG',
-                  jumlahBidang: '2',
-                  jumlahLuas: '500',
-                  jumlahNilai: '500000000',
-                  color: const Color(0x0ffB3B300))
-            ],
-          ),
+        BlocBuilder<DashboardBloc, DashboardState>(
+          bloc:BlocProvider.of<DashboardBloc>(context)..add(OnDashboardEvent()),
+          builder: (context, state) {
+            return SizedBox(
+              height: 150,
+              child: PageView(
+                scrollDirection: Axis.horizontal,
+                physics: const PageScrollPhysics(),
+                controller: _controller,
+                children: [
+                  SliderCardComponent(
+                      titleCard: 'KABUPATEN LEBAK',
+                      jumlahBidang: '${state.lebak}',
+                      jumlahLuas: '500',
+                      jumlahNilai: '500000000',
+                      color: const Color(0x0ff2da69b)),
+                  SliderCardComponent(
+                      titleCard: 'KABUPATEN SERANG',
+                      jumlahBidang: '${state.serang}',
+                      jumlahLuas: '500',
+                      jumlahNilai: '500000000',
+                      color: const Color(0x0ff34C5D8)),
+                  SliderCardComponent(
+                      titleCard: 'KABUPATEN TANGERANG',
+                      jumlahBidang: '2',
+                      jumlahLuas: '500',
+                      jumlahNilai: '500000000',
+                      color: const Color(0x0ffB3B300))
+                ],
+              ),
+            );
+          },
         )
       ],
     );
   }
+
+
 }

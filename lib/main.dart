@@ -1,11 +1,21 @@
+import 'package:elahan_kscs/auth/bloc/auth_bloc.dart';
 import 'package:elahan_kscs/auth/screen/login_screen.dart';
 import 'package:elahan_kscs/custom_routes.dart';
+import 'package:elahan_kscs/dashboard/bloc/dashboard_bloc.dart';
+import 'package:elahan_kscs/dashboard/screen/dashboard_screen.dart';
 import 'package:elahan_kscs/menu/inventarisasi/screen/detail_inven.dart';
 import 'package:elahan_kscs/menu/inventarisasi/screen/inventarisasi.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (BuildContext context) => AuthBloc()),
+      BlocProvider(create: (BuildContext context) => DashboardBloc()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -28,6 +38,7 @@ class MyApp extends StatelessWidget {
       ),
       home: LoginScreen(),
       routes: {
+        CustomRoutes.dashboard : (context) => DashboardScreen(),
         CustomRoutes.inventarisasi : (context) => Inventarisasi(),
         CustomRoutes.detailInventarisasi : (context) => DetailInventarisasi(),
       },
