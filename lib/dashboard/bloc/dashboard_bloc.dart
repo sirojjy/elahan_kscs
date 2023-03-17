@@ -11,9 +11,7 @@ part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   DashboardBloc() : super(DashboardState()) {
-    on<DashboardEvent>((event, emit) {
-      on<OnDashboardEvent>(_DashboardEvent);
-    });
+    on<OnDashboardEvent>(_DashboardEvent);
   }
 
   FutureOr<void> _DashboardEvent(OnDashboardEvent event, Emitter<DashboardState> emit) async{

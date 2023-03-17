@@ -52,7 +52,7 @@ class _SliderCardState extends State<SliderCard> {
                   SliderCardComponent(
                       titleCard: 'KABUPATEN LEBAK',
                       jumlahBidang: '${state.lebak}',
-                      jumlahLuas: '500',
+                      jumlahLuas: '${state.luasLebak}',
                       jumlahNilai: '500000000',
                       color: const Color(0x0ff2da69b)),
                   SliderCardComponent(

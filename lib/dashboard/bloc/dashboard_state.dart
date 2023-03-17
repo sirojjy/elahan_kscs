@@ -15,7 +15,7 @@ class DashboardState extends Equatable {
   final String? lebak;
   final String? serang;
   final String? tangerang;
-  final String? totalBidang;
+  final int? totalBidang;
   final String? luasLebak;
   final String? luasSerang;
   final String? luasTangerang;
@@ -61,7 +61,7 @@ class DashboardState extends Equatable {
     String? lebak,
     String? serang,
     String? tangerang,
-    String? totalBidang,
+    int? totalBidang,
     String? luasLebak,
     String? luasSerang,
     String? luasTangerang,
