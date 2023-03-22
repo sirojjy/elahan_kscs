@@ -52,12 +52,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(state.copyWith(
             status: AuthStateStatus.success,
           ));
-          print('id_ruas login : ${response}');
+          // print('id_ruas login : ${response}');
           // await prefs.setString('id_user', response['id_user']);
           await prefs.setString('id_ruas', response['data']['id_ruas']);
-          // await prefs.setString('nama_ruas', response['nama_ruas']);
-          var id_ruas= await prefs.getString('id_ruas');
-          print('id_ruas dari prefs $id_ruas}');
+          await prefs.setString('nama_ruas', response['nama_ruas']);
+
+          // var id_ruas= await prefs.getString('id_ruas');
+          // print('id_ruas dari prefs $id_ruas}');
 
           // print('TEST 2 : ${prefs.getString('nama')}');
         }

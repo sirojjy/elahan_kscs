@@ -27,7 +27,7 @@ class DonutBidangLengkap extends StatelessWidget {
           ]),
       child: SfCircularChart(
         palette: const [Color(0xff1d84d7), Color(0xfffd8530)],
-        title: ChartTitle(text: 'Progres Pengadaan Tanah (bidang)'),
+        title: ChartTitle(text: 'Total Bidang Lengkap & Belum Lengkap)'),
         legend:
             Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
         tooltipBehavior: _tooltipBehavior,

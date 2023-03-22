@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 
 class SliderCardComponent extends StatelessWidget {
   final String titleCard;
-  final String jumlahBidang;
+  final int jumlahBidang;
   final String jumlahLuas;
-  final String jumlahNilai;
+  final int jumlahNilai;
   final color;
   // final String s= num.toString().replaceAll((regex), '');
 
@@ -60,13 +62,13 @@ class SliderCardComponent extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('$jumlahLuas m2',
+                Text('${jumlahLuas} m2',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 15,
                   ),
                 ),
-                Text('Rp $jumlahNilai',
+                Text('Rp ${jumlahNilai}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 15,

@@ -5,4 +5,4 @@ class DashboardEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class OnDashboardEvent extends DashboardEvent {}
+class ViewDashboardEvent extends DashboardEvent {}

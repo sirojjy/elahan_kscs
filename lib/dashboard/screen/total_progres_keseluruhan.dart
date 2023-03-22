@@ -38,6 +38,12 @@ class TotalProgresKeseluruhan extends StatelessWidget {
                 const ChartDurasiWaktu(),
                 const SizedBox(height: 10,),
 
+                BarChartIssue(),
+                SizedBox(height: 10,),
+
+                BarChartKelengkapan(),
+                SizedBox(height: 10,),
+
                 DonutBidangLengkap(),
                 const SizedBox(height: 10,),
 

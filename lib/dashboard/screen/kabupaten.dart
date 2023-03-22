@@ -3,6 +3,7 @@ import 'package:elahan_kscs/dashboard/component/slider_card_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class SliderCard extends StatefulWidget {
   const SliderCard({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _SliderCardState extends State<SliderCard> {
       physics: const NeverScrollableScrollPhysics(),
       children: [
         BlocBuilder<DashboardBloc, DashboardState>(
-          bloc:BlocProvider.of<DashboardBloc>(context)..add(OnDashboardEvent()),
+          bloc:BlocProvider.of<DashboardBloc>(context)..add(ViewDashboardEvent()),
           builder: (context, state) {
             return SizedBox(
               height: 150,
@@ -51,21 +52,21 @@ class _SliderCardState extends State<SliderCard> {
                 children: [
                   SliderCardComponent(
                       titleCard: 'KABUPATEN LEBAK',
-                      jumlahBidang: '${state.lebak}',
+                      jumlahBidang: int.parse(state.lebak ?? '0'),
                       jumlahLuas: '${state.luasLebak}',
-                      jumlahNilai: '500000000',
+                      jumlahNilai: int.parse(state.nilaiLebak ?? '0'),
                       color: const Color(0x0ff2da69b)),
                   SliderCardComponent(
                       titleCard: 'KABUPATEN SERANG',
-                      jumlahBidang: '${state.serang}',
-                      jumlahLuas: '500',
-                      jumlahNilai: '500000000',
+                      jumlahBidang: 278,
+                      jumlahLuas: '${state.luasSerang ?? 0}',
+                      jumlahNilai: int.parse(state.nilaiSerang ?? '0'),
                       color: const Color(0x0ff34C5D8)),
                   SliderCardComponent(
                       titleCard: 'KABUPATEN TANGERANG',
-                      jumlahBidang: '2',
-                      jumlahLuas: '500',
-                      jumlahNilai: '500000000',
+                      jumlahBidang: 278,
+                      jumlahLuas: '${state.luasTangerang}',
+                      jumlahNilai: int.parse(state.nilaiTangerang ?? '0'),
                       color: const Color(0x0ffB3B300))
                 ],
               ),
