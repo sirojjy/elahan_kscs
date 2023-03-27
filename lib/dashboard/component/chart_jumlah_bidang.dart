@@ -29,6 +29,30 @@ class _ChartJumlahBidangState extends State<ChartJumlahBidang> {
     return BlocBuilder<DashboardBloc, DashboardState>(
       bloc: BlocProvider.of<DashboardBloc>(context)..add(ViewDashboardEvent()),
       builder: (context, state) {
+        List<SalesData> getChartData() {
+          var chartData = <SalesData>[];
+          var listData = [
+            {'year': 'Penyerahan \nHasil', 'sales': state.kurangPenlok ?? 0, 'sales2': 12},
+            {'year': 'Pembayaran', 'sales': state.kurangDNominatif ?? 0, 'sales2': 22},
+            {'year': 'Yuridis', 'sales': state.kurangValidasiP2t ?? 0, 'sales2': 33},
+            {'year': 'Usulan SPP', 'sales': state.kurangSpp ?? 0, 'sales2': 13},
+            {'year': 'Validasi BPN', 'sales': state.kurangIdentitas ?? 0, 'sales2': 14},
+            {'year': 'Musyawarah', 'sales': state.kurangAlasHak ?? 0, 'sales2': 44},
+            {'year': 'Apraisal', 'sales': state.kurangPeta ?? 0, 'sales2': 11},
+            {'year': 'Inventarisasi', 'sales': state.kurangApraisal ?? 0, 'sales2': 12},
+          ];
+          for (var i = 0; i < listData.length; i++) {
+            chartData.add(SalesData(
+                year: listData[i]['year'].toString(),
+                sales: double.parse(listData[i]['sales'].toString()),
+                sales2: double.parse(listData[i]['sales2'].toString()),
+            ));
+            // nilai: double.parse(listData[i]['data'].toString())));
+          }
+
+          return chartData;
+        }
+
         return Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
@@ -61,33 +85,35 @@ class _ChartJumlahBidangState extends State<ChartJumlahBidang> {
                     StackedBarSeries(
                         name: 'Sudah Realisasi',
                         dataLabelSettings: DataLabelSettings(isVisible: true),
-                        dataSource: <SalesData>[
-                          SalesData('Penyerahan \nHasil', 42, 0),
-                          SalesData('Pembayaran', 42, 4),
-                          SalesData('Yuridis', 43, 3),
-                          SalesData('Usulan SPP', 46, 1),
-                          SalesData('Validasi BPN', 47, 1),
-                          SalesData('Musyawarah', 48, 1),
-                          SalesData('Apraisal', 278, 49),
-                          SalesData('Pengumuman', 278, 49),
-                          SalesData('Inventarisasi', 327, 100),
-                        ],
+                        dataSource: getChartData(),
+                        // dataSource: <SalesData>[
+                        //   SalesData(year: 'Penyerahan \nHasil', state.inventarisasiReal ?? 0, 0),
+                        //   SalesData('Pembayaran', 42, 4),
+                        //   SalesData('Yuridis', 43, 3),
+                        //   SalesData('Usulan SPP', 46, 1),
+                        //   SalesData('Validasi BPN', 47, 1),
+                        //   SalesData('Musyawarah', 48, 1),
+                        //   SalesData('Apraisal', 278, 49),
+                        //   SalesData('Pengumuman', 278, 49),
+                        //   SalesData('Inventarisasi', 327, 100),
+                        // ],
                         xValueMapper: (SalesData sales, _) => sales.year,
                         yValueMapper: (SalesData sales, _) => sales.sales),
                     StackedBarSeries(
                         name: 'Belum Realisasi',
                         dataLabelSettings: DataLabelSettings(isVisible: true),
-                        dataSource: <SalesData>[
-                          SalesData('Penyerahan \nHasil', 42, 0),
-                          SalesData('Pembayaran', 42, 4),
-                          SalesData('Yuridis', 43, 3),
-                          SalesData('Usulan SPP', 46, 1),
-                          SalesData('Validasi BPN', 47, 1),
-                          SalesData('Musyawarah', 48, 1),
-                          SalesData('Apraisal', 278, 49),
-                          SalesData('Pengumuman', 278, 49),
-                          SalesData('Inventarisasi', 327, 0),
-                        ],
+                        dataSource: getChartData(),
+                        // dataSource: <SalesData>[
+                        //   SalesData('Penyerahan \nHasil', 42, 0),
+                        //   SalesData('Pembayaran', 42, 4),
+                        //   SalesData('Yuridis', 43, 3),
+                        //   SalesData('Usulan SPP', 46, 1),
+                        //   SalesData('Validasi BPN', 47, 1),
+                        //   SalesData('Musyawarah', 48, 1),
+                        //   SalesData('Apraisal', 278, 49),
+                        //   SalesData('Pengumuman', 278, 49),
+                        //   SalesData('Inventarisasi', 327, 0),
+                        // ],
                         xValueMapper: (SalesData sales, _) => sales.year,
                         yValueMapper: (SalesData sales, _) => sales.sales2)
                   ]),
@@ -98,8 +124,9 @@ class _ChartJumlahBidangState extends State<ChartJumlahBidang> {
 }
 
 class SalesData {
-  SalesData(this.year, this.sales, this.sales2);
+
   final String year;
   final double? sales;
   final double? sales2;
+  SalesData({required this.year, this.sales, this.sales2});
 }

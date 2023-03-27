@@ -3,6 +3,7 @@ import 'package:elahan_kscs/auth/screen/login_screen.dart';
 import 'package:elahan_kscs/custom_routes.dart';
 import 'package:elahan_kscs/dashboard/bloc/dashboard_bloc.dart';
 import 'package:elahan_kscs/dashboard/screen/dashboard_screen.dart';
+import 'package:elahan_kscs/menu/inventarisasi/bloc/inventarisasi_bloc.dart';
 import 'package:elahan_kscs/menu/inventarisasi/screen/detail_inven.dart';
 import 'package:elahan_kscs/menu/inventarisasi/screen/inventarisasi.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ void main() {
     providers: [
       BlocProvider(create: (BuildContext context) => AuthBloc()),
       BlocProvider(create: (BuildContext context) => DashboardBloc()),
+      BlocProvider(create: (BuildContext context) => InventarisasiBloc()),
     ],
     child: const MyApp(),
   ));

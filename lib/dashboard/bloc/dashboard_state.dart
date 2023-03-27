@@ -61,7 +61,7 @@ class DashboardState extends Equatable {
 
   ///total bidang belum lengkap
   final String? bidangLengkap;
-  // final int? bidangKurang;
+  final int? bidangKurang;
 
   ///total kekurangan berkas
   final String? kurangPenlok;
@@ -127,7 +127,7 @@ class DashboardState extends Equatable {
 
     ///total bidang belum lengkap
     this.bidangLengkap,
-    // this.bidangKurang,
+    this.bidangKurang,
 
     ///total kekurangan berkas
     this.kurangPenlok,
@@ -196,7 +196,7 @@ class DashboardState extends Equatable {
 
         ///total bidang belum lengkap
         bidangLengkap,
-        // bidangKurang,
+        bidangKurang,
 
         ///total kekurangan berkas
         kurangPenlok,
@@ -263,7 +263,7 @@ class DashboardState extends Equatable {
 
     ///total bidang belum lengkap
     String? bidangLengkap,
-    // int? bidangKurang,
+    int? bidangKurang,
 
     ///total kekurangan berkas
     String? kurangPenlok,
@@ -329,7 +329,7 @@ class DashboardState extends Equatable {
 
       ///total bidang belum lengkap
       bidangLengkap: bidangLengkap ?? this.bidangLengkap,
-      // bidangKurang: bidangKurang ?? this.bidangKurang,
+      bidangKurang: bidangKurang ?? this.bidangKurang,
 
       ///total kekurangan berkas
       kurangPenlok: kurangPenlok ?? this.kurangPenlok,

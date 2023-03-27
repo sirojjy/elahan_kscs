@@ -9,4 +9,5 @@ class ApiConstant {
   static String baseUrl = 'http://123.100.226.123:1445/index.php/Mobile';
   static String authentication = '$baseUrl/login';
   static String dashboard = '$baseUrl/dashboard';
+  static String inventarisasi = '$baseUrl/inventarisasi';
 }

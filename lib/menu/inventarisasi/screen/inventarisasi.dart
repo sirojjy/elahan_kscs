@@ -1,6 +1,9 @@
 import 'package:elahan_kscs/appBar/appBar.dart';
 import 'package:elahan_kscs/custom_routes.dart';
+import 'package:elahan_kscs/menu/inventarisasi/bloc/inventarisasi_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Inventarisasi extends StatefulWidget {
   const Inventarisasi({Key? key}) : super(key: key);
@@ -10,52 +13,71 @@ class Inventarisasi extends StatefulWidget {
 }
 
 class _InventarisasiState extends State<Inventarisasi> {
+  SharedPreferences? pref;
+
+  @override
+  void initState() {
+    BlocProvider.of<InventarisasiBloc>(context).add(ViewInventarisasi());
+  }
+
+  void getPref() async {
+    pref = await SharedPreferences.getInstance();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child:
     Scaffold(
       appBar: MyAppBar(judul:'Inventarisasi',),
-      body: Container(
-        child: ListView.builder(
-            itemCount: inventarisasi.length,
-            itemBuilder: (context, index) {
-              return Card(
-                child: ListTile(
-                  onTap: (){
-                    Navigator.pushNamed(context, CustomRoutes.detailInventarisasi);
-                  },
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('${inventarisasi[index].namaPenerima}'),
-                      Text('KTP : ${inventarisasi[index].ktp}',
-                        style: const TextStyle(fontSize: 14),
+      body: BlocBuilder<InventarisasiBloc, InventarisasiState>(
+        builder: (context, state){
+          return Container(
+            child: state.dataInventarisasi.isNotEmpty ?
+            ListView.builder(
+                itemCount: state.dataInventarisasi.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      onTap: (){
+                        Navigator.pushNamed(context, CustomRoutes.detailInventarisasi);
+                      },
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${state.dataInventarisasi[index].nama}'),
+                          Text('KTP : ${state.dataInventarisasi[index].noKtp}',
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                          Text(
+                            'Desa :${state.dataInventarisasi[index].kelurahan}',
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Desa :${inventarisasi[index].desa}',
-                        style: const TextStyle(fontSize: 14),
+                      trailing: Wrap(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 2, horizontal: 3),
+                            decoration: BoxDecoration(color: Colors.redAccent),
+                            child: Text('0', style: TextStyle(color: Colors.white),),
+                          ),
+                          SizedBox(width: 5,),
+                          Text('${state.dataInventarisasi[index].statusSave}')
+                        ],
                       ),
-                    ],
-                  ),
-                  trailing: Wrap(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 2, horizontal: 3),
-                        decoration: BoxDecoration(color: Colors.redAccent),
-                        child: Text(inventarisasi[index].issue, style: TextStyle(color: Colors.white),),
-                      ),
-                      SizedBox(width: 5,),
-                      Text('${inventarisasi[index].status}')
-                    ],
-                  ),
-                ),
-              );
-            }
-        ),
+                    ),
+                  );
+                }
+            )
+                : Text('Data Kosong')
+          );
+        },
       ),
     ));
   }
 }
+
+
 
 class DaftarInventarisasi{
   String namaPenerima;

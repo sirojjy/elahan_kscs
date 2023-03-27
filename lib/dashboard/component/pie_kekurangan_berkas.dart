@@ -27,21 +27,23 @@ class _PieKekuranganBerkasState extends State<PieKekuranganBerkas> {
         List<IssueData> getChartData() {
           var chartData = <IssueData>[];
           var listData = [
-            {'data': state.kurangPenlok, 'label': 'Penlok'},
-            {'data': state.kurangDNominatif, 'label': 'Nominatif'},
-            {'data': state.kurangValidasiP2t, 'label': 'Validasi P2T'},
-            {'data': state.kurangSpp, 'label': 'SPP'},
-            {'data': state.kurangIdentitas, 'label': 'Identitas'},
-            {'data': state.kurangAlasHak, 'label': 'Alas Hak'},
-            {'data': state.kurangPeta, 'label': 'Peta Bidang'},
-            {'data': state.kurangApraisal, 'label': 'Apraisal'},
-            {'data': state.kurangPendukung, 'label': 'Dok. Pendukung'},
-            {'data': state.kurangSptjp, 'label': 'SPTJP'},
+            {'data': state.kurangPenlok ?? 0, 'label': 'Penlok'},
+            {'data': state.kurangDNominatif ?? 0, 'label': 'Nominatif'},
+            {'data': state.kurangValidasiP2t ?? 0, 'label': 'Validasi P2T'},
+            {'data': state.kurangSpp ?? 0, 'label': 'SPP'},
+            {'data': state.kurangIdentitas ?? 0, 'label': 'Identitas'},
+            {'data': state.kurangAlasHak ?? 0, 'label': 'Alas Hak'},
+            {'data': state.kurangPeta ?? 0, 'label': 'Peta Bidang'},
+            {'data': state.kurangApraisal ?? 0, 'label': 'Apraisal'},
+            {'data': state.kurangPendukung ?? 0, 'label': 'Dok. Pendukung'},
+            {'data': state.kurangSptjp ?? 0, 'label': 'SPTJP'},
           ];
           for (var i = 0; i < listData.length; i++) {
             chartData.add(IssueData(
                 label: listData[i]['label'].toString(),
-                nilai: double.parse(listData[i]['data'].toString())));
+                nilai: double.parse(listData[i]['data'].toString())
+            ));
+                // nilai: double.parse(listData[i]['data'].toString())));
           }
 
           return chartData;

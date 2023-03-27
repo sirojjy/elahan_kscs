@@ -1,4 +1,8 @@
 part of 'inventarisasi_bloc.dart';
 
-@immutable
-abstract class InventarisasiEvent {}
+class InventarisasiEvent extends Equatable{
+  @override
+  List<Object> get props => [];
+}
+
+class ViewInventarisasi extends InventarisasiEvent {}
