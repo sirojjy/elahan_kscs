@@ -89,6 +89,15 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
             pembayaranBelum: response['bayar_belum'],
             hasilReal: response['bayar_sudah'],
             hasilBelum: response['bayar_belum'],
+            ///Total Luas Bidang
+
+            luasApraisal: response['bayar_belum'],
+            luasMusyawarah: response['bayar_belum'],
+            luasValidasi: response['bayar_belum'],
+            luasSpp: response['bayar_belum'],
+            luasYuridis: response['bayar_belum'],
+            luasPembayaranSpp: response['bayar_belum'],
+            luasPenyerahanHasil: response['bayar_belum'],
             ///total bidang belum lengkap
             bidangLengkap: response['eligibel'],
             // bidangKurang: response['uneligible'],

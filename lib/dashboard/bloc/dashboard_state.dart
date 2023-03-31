@@ -59,6 +59,15 @@ class DashboardState extends Equatable {
   final String? hasilReal;
   final String? hasilBelum;
 
+  ///Total Luas Bidang
+  final String? luasApraisal;
+  final String? luasMusyawarah;
+  final String? luasValidasi;
+  final String? luasSpp;
+  final String? luasYuridis;
+  final String? luasPembayaranSpp;
+  final String? luasPenyerahanHasil;
+
   ///total bidang belum lengkap
   final String? bidangLengkap;
   final int? bidangKurang;
@@ -124,6 +133,15 @@ class DashboardState extends Equatable {
     this.pembayaranBelum,
     this.hasilReal,
     this.hasilBelum,
+
+    ///Total Luas Bidang
+    this.luasApraisal,
+    this.luasMusyawarah,
+    this.luasValidasi,
+    this.luasSpp,
+    this.luasYuridis,
+    this.luasPembayaranSpp,
+    this.luasPenyerahanHasil,
 
     ///total bidang belum lengkap
     this.bidangLengkap,
@@ -194,6 +212,15 @@ class DashboardState extends Equatable {
         hasilReal,
         hasilBelum,
 
+        ///Total Luas Bidang
+        luasApraisal,
+        luasMusyawarah,
+        luasValidasi,
+        luasSpp,
+        luasYuridis,
+        luasPembayaranSpp,
+        luasPenyerahanHasil,
+
         ///total bidang belum lengkap
         bidangLengkap,
         bidangKurang,
@@ -261,6 +288,15 @@ class DashboardState extends Equatable {
     String? hasilReal,
     String? hasilBelum,
 
+    ///Total Luas Bidang
+    String? luasApraisal,
+    String? luasMusyawarah,
+    String? luasValidasi,
+    String? luasSpp,
+    String? luasYuridis,
+    String? luasPembayaranSpp,
+    String? luasPenyerahanHasil,
+
     ///total bidang belum lengkap
     String? bidangLengkap,
     int? bidangKurang,
@@ -326,6 +362,15 @@ class DashboardState extends Equatable {
       pembayaranBelum: pembayaranBelum ?? this.pembayaranBelum,
       hasilReal: hasilReal ?? this.hasilReal,
       hasilBelum: hasilBelum ?? this.hasilBelum,
+
+      ///Total Luas Bidang
+      luasApraisal: luasApraisal ?? this.luasApraisal,
+      luasMusyawarah: luasMusyawarah ?? this.luasMusyawarah,
+      luasValidasi: luasValidasi ?? this.luasValidasi,
+      luasSpp: luasSpp ?? this.luasSpp,
+      luasYuridis: luasYuridis ?? this.luasYuridis,
+      luasPembayaranSpp: luasPembayaranSpp ?? this.luasPembayaranSpp,
+      luasPenyerahanHasil: luasPenyerahanHasil ?? this.luasPenyerahanHasil,
 
       ///total bidang belum lengkap
       bidangLengkap: bidangLengkap ?? this.bidangLengkap,

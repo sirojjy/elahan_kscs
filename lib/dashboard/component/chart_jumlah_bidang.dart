@@ -32,14 +32,15 @@ class _ChartJumlahBidangState extends State<ChartJumlahBidang> {
         List<SalesData> getChartData() {
           var chartData = <SalesData>[];
           var listData = [
-            {'year': 'Penyerahan \nHasil', 'sales': state.kurangPenlok ?? 0, 'sales2': 12},
-            {'year': 'Pembayaran', 'sales': state.kurangDNominatif ?? 0, 'sales2': 22},
-            {'year': 'Yuridis', 'sales': state.kurangValidasiP2t ?? 0, 'sales2': 33},
-            {'year': 'Usulan SPP', 'sales': state.kurangSpp ?? 0, 'sales2': 13},
-            {'year': 'Validasi BPN', 'sales': state.kurangIdentitas ?? 0, 'sales2': 14},
-            {'year': 'Musyawarah', 'sales': state.kurangAlasHak ?? 0, 'sales2': 44},
-            {'year': 'Apraisal', 'sales': state.kurangPeta ?? 0, 'sales2': 11},
-            {'year': 'Inventarisasi', 'sales': state.kurangApraisal ?? 0, 'sales2': 12},
+            {'year': 'Penyerahan \nHasil', 'sales': state.hasilReal ?? 0, 'sales2': state.hasilBelum},
+            {'year': 'Pembayaran', 'sales': state.pembayaranReal ?? 0, 'sales2': state.pembayaranBelum},
+            {'year': 'Yuridis', 'sales': state.yuridisReal ?? 0, 'sales2': state.yuridisBelum},
+            {'year': 'Usulan SPP', 'sales': state.sppReal ?? 0, 'sales2': state.sppBelum},
+            {'year': 'Validasi BPN', 'sales': state.validasiReal ?? 0, 'sales2': state.validasiBelum},
+            {'year': 'Musyawarah', 'sales': state.musyawarahReal ?? 0, 'sales2': state.musyawarahBelum},
+            {'year': 'Apraisal', 'sales': state.apraisalReal ?? 0, 'sales2': state.apraisalBelum},
+            {'year': 'Pengumuman', 'sales': state.inventarisasiReal ?? 0, 'sales2': 0},
+            {'year': 'Inventarisasi', 'sales': state.inventarisasiReal ?? 0, 'sales2': 0},
           ];
           for (var i = 0; i < listData.length; i++) {
             chartData.add(SalesData(
