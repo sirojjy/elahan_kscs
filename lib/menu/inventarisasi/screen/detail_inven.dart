@@ -24,7 +24,6 @@ class _DetailInventarisasiState extends State<DetailInventarisasi> {
     LatLng(-6.198562, 106.840239),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

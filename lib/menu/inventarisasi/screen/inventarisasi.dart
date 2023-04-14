@@ -45,7 +45,8 @@ class _InventarisasiState extends State<Inventarisasi> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('${state.dataInventarisasi[index].nama}'),
-                          Text('KTP : ${state.dataInventarisasi[index].noKtp}',
+                          Text('Luas : ${state.dataInventarisasi[index].luasTanah}'),
+                          Text('KTP : ${state.dataInventarisasi[index].noKtp ?? '-'}',
                             style: const TextStyle(fontSize: 14),
                           ),
                           Text(
@@ -56,13 +57,15 @@ class _InventarisasiState extends State<Inventarisasi> {
                       ),
                       trailing: Wrap(
                         children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(vertical: 2, horizontal: 3),
-                            decoration: BoxDecoration(color: Colors.redAccent),
-                            child: Text('0', style: TextStyle(color: Colors.white),),
-                          ),
+                          Text('${state.dataInventarisasi[index].statusSave}'),
                           SizedBox(width: 5,),
-                          Text('${state.dataInventarisasi[index].statusSave}')
+                          // Container(
+                          //   padding: EdgeInsets.symmetric(vertical: 2, horizontal: 3),
+                          //   decoration: BoxDecoration(color: Colors.redAccent),
+                          //   child: state.dataInventarisasi.isNotEmpty ?
+                          //   Text('0', style: TextStyle(color: Colors.white),)
+                          //       : SizedBox()
+                          // ),
                         ],
                       ),
                     ),
@@ -76,8 +79,6 @@ class _InventarisasiState extends State<Inventarisasi> {
     ));
   }
 }
-
-
 
 class DaftarInventarisasi{
   String namaPenerima;

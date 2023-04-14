@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 class PieChartTangerang extends StatefulWidget {
   const PieChartTangerang({Key? key}) : super(key: key);
@@ -80,6 +81,10 @@ class _PieChartTangerangState extends State<PieChartTangerang> {
                 yValueMapper: (IssueData data, _) => data.nilai,
                 dataLabelSettings: const DataLabelSettings(isVisible: true),
                 enableTooltip: true,
+                dataLabelMapper: (IssueData data, _) {
+                  final format = NumberFormat('#,##0', 'id_ID');
+                  return '${format.format(data.nilai)}';
+                },
               )
             ],
           ),

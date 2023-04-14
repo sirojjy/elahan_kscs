@@ -60,23 +60,24 @@ class TitleCardComponent extends StatelessWidget {
                 ),
               ),
               Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5),
-                      bottomRight: Radius.circular(5)),
-                  color: Colors.white,
-                ),
-                // height: 40,
-                child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                    child: Table(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(5),
+                        bottomRight: Radius.circular(5)),
+                    color: Colors.white,
+                  ),
+                  // height: 40,
+                  child: Column(children: [
+                    Table(
                       columnWidths: const <int, TableColumnWidth>{
                         0: IntrinsicColumnWidth(),
                         1: FlexColumnWidth(),
                       },
                       children: <TableRow>[
                         TableRow(children: [
-                          Container(
+                          SizedBox(
                             height: 30,
                             child: Padding(
                               padding: const EdgeInsets.only(right: 30),
@@ -86,7 +87,7 @@ class TitleCardComponent extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             height: 30,
                             child: Text(
                               ': 1.642 Bidang',
@@ -95,11 +96,11 @@ class TitleCardComponent extends StatelessWidget {
                           ),
                         ]),
                         TableRow(children: [
-                          Container(
+                          const SizedBox(
                             height: 30,
                             child: Text(' '),
                           ),
-                          Container(
+                          SizedBox(
                             height: 30,
                             child: Text(
                               ': 116,61 Ha',
@@ -108,14 +109,14 @@ class TitleCardComponent extends StatelessWidget {
                           ),
                         ]),
                         TableRow(children: [
-                          Container(
+                          SizedBox(
                             height: 30,
                             child: Text(
                               'Sudah Bebas',
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             height: 30,
                             child: Text(
                               ': 374  Bidang',
@@ -124,11 +125,11 @@ class TitleCardComponent extends StatelessWidget {
                           ),
                         ]),
                         TableRow(children: [
-                          Container(
+                          const SizedBox(
                             height: 30,
                             child: Text(' '),
                           ),
-                          Container(
+                          SizedBox(
                             height: 30,
                             child: Text(
                               ': 24,99  Ha',
@@ -137,14 +138,14 @@ class TitleCardComponent extends StatelessWidget {
                           ),
                         ]),
                         TableRow(children: [
-                          Container(
+                          SizedBox(
                             height: 30,
                             child: Text(
                               'Belum Bebas',
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             height: 30,
                             child: Text(
                               ': 1.268  Bidang',
@@ -153,11 +154,11 @@ class TitleCardComponent extends StatelessWidget {
                           ),
                         ]),
                         TableRow(children: [
-                          Container(
+                          const SizedBox(
                             height: 30,
                             child: Text(' '),
                           ),
-                          Container(
+                          SizedBox(
                             height: 30,
                             child: Text(
                               ': 91,62  Ha',
@@ -166,8 +167,54 @@ class TitleCardComponent extends StatelessWidget {
                           ),
                         ]),
                       ],
-                    )),
-              )
+                    ),
+                    Table(
+                      columnWidths: const <int, TableColumnWidth>{
+                        0: IntrinsicColumnWidth(),
+                        1: FlexColumnWidth(),
+                      },
+                      children: <TableRow>[
+                        TableRow(children: [
+                          SizedBox(
+                            height: 30,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 30),
+                              child: Text(
+                                'Progress lahan bebas (Luas)',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            child: Text(
+                              ': 21,43%',
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          SizedBox(
+                            height: 30,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 30),
+                              child: Text(
+                                'Progress lahan bebas (Bidang)',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            child: Text(
+                              ': 22,78%',
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ),
+                        ]),
+                      ],
+                    )
+                  ]))
             ],
           ),
         )),

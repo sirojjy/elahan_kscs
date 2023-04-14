@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 class DonutChart extends StatelessWidget {
   var _tooltipBehavior;
@@ -38,6 +39,10 @@ class DonutChart extends StatelessWidget {
             yValueMapper: (DataLuasTanah data, _) => data.belumBebas,
             dataLabelSettings: const DataLabelSettings(isVisible: true),
             enableTooltip: true,
+            dataLabelMapper: (DataLuasTanah data, _) {
+              final format = NumberFormat('#,##0', 'id_ID');
+              return '${format.format(data.belumBebas)}';
+            },
           )
         ],
       ),

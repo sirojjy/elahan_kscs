@@ -2,6 +2,7 @@ import 'package:elahan_kscs/dashboard/bloc/dashboard_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 class PieChartSerang extends StatefulWidget {
   const PieChartSerang({Key? key}) : super(key: key);
@@ -72,6 +73,10 @@ class _PieChartSerangState extends State<PieChartSerang> {
                 yValueMapper: (IssueData data, _) => data.nilai,
                 dataLabelSettings: const DataLabelSettings(isVisible: true),
                 enableTooltip: true,
+                dataLabelMapper: (IssueData data, _) {
+                  final format = NumberFormat('#,##0', 'id_ID');
+                  return '${format.format(data.nilai)}';
+                },
               )
             ],
           ),

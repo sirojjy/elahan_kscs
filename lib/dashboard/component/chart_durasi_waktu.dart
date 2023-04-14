@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 
 class ChartDurasiWaktu extends StatefulWidget {
@@ -35,7 +36,7 @@ class _ChartDurasiWaktuState extends State<ChartDurasiWaktu> {
           child: SfCartesianChart(
               primaryXAxis: CategoryAxis(),
               primaryYAxis: NumericAxis(),
-              title: ChartTitle(text: 'Durasi Waktu Rata-rata'),
+              title: ChartTitle(text: 'Durasi Waktu Rata-rata (hari)'),
               // legend: Legend(
               //   isVisible: true,
               //   title: LegendTitle(text: 'Durasi Rata-rata (hari)'),
@@ -48,36 +49,28 @@ class _ChartDurasiWaktuState extends State<ChartDurasiWaktu> {
               ],
               series: <StackedBarSeries<SalesData, String>>[
                 StackedBarSeries(
-                    name: '',
+                    name: 'Hari',
                     dataLabelSettings: DataLabelSettings(isVisible: true),
+                    dataLabelMapper: (SalesData data, _) {
+                      final format = NumberFormat('#,##0', 'id_ID');
+                      return '${format.format(data.sales)}';
+                    },
                     dataSource: <SalesData>[
-                      SalesData('Pembayaran-\nPenyerahan Hasil', 7),
-                      SalesData('Usulan SPP-\nPembayaran', 4),
-                      SalesData('Validasi-\nUsulan SPP', 3),
-                      SalesData('Musyawarah-\nValidasi', 5),
-                      SalesData('Apraisal-\nMusyawarah', 6),
-                      SalesData('Inventarisasi-\nApraisal', 14),
-                      SalesData('Penlok-\nInventarisasi', 20),
-                      SalesData('Konsultasi \nPublik-Penlok', 12),
-                      SalesData('DPPT-Konsultasi \nPublik', 10),
+                      SalesData('Pembayaran-\nPenyerahan Hasil', 0),
+                      SalesData('Usulan SPP-\nPembayaran', 1),
+                      SalesData('Validasi-\nUsulan SPP', 7),
+                      SalesData('Musyawarah-\nValidasi', 1),
+                      SalesData('Apraisal-\nMusyawarah', 1),
+                      SalesData('Inventarisasi-\nApraisal', 27),
+                      SalesData('Penlok-\nInventarisasi', 15),
+                      SalesData('Konsultasi \nPublik-Penlok', 20),
+                      SalesData('DPPT-Konsultasi \nPublik', 30),
                     ],
                     xValueMapper: (SalesData sales, _) => sales.year,
                     yValueMapper: (SalesData sales, _) => sales.sales),
-                // StackedBarSeries(
-                //     name: 'Belum Realisasi',
-                //     dataLabelSettings: DataLabelSettings(isVisible: true),
-                //     dataSource: <SalesData>[
-                //       SalesData('Penyerahan \nHasil', 0, 0),
-                //       SalesData('Pembayaran', 0, 0),
-                //       SalesData('Yuridis', 0, 0),
-                //       SalesData('Usulan SPP', 8000000000, 800000000),
-                //       SalesData('Validasi BPN', 8000000000, 800000000),
-                //       SalesData('Musyawarah', 10000000000, 1000000000),
-                //       SalesData('Apraisal', 10000000000, 1000000000),
-                //     ],
-                //     xValueMapper: (SalesData sales, _) => sales.year,
-                //     yValueMapper: (SalesData sales, _) => sales.sales2)
-              ]),
+
+              ]
+          ),
         ));
   }
 }

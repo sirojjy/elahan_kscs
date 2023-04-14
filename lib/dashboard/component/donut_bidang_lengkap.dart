@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 class DonutBidangLengkap extends StatelessWidget {
   var _tooltipBehavior;
@@ -36,7 +37,11 @@ class DonutBidangLengkap extends StatelessWidget {
             dataSource: dataKategoriCard(),
             xValueMapper: (DataLuasTanah data, _) => data.bebas,
             yValueMapper: (DataLuasTanah data, _) => data.belumLengkap,
-            dataLabelSettings: const DataLabelSettings(isVisible: true),
+            dataLabelSettings: const DataLabelSettings(isVisible: true,),
+            dataLabelMapper: (DataLuasTanah data, _) {
+              final format = NumberFormat('#,##0', 'id_ID');
+              return '${format.format(data.belumLengkap)}';
+            },
             enableTooltip: true,
           )
         ],
@@ -48,8 +53,8 @@ class DonutBidangLengkap extends StatelessWidget {
 List<DataLuasTanah> dataKategoriCard() {
   var chartData = <DataLuasTanah>[];
   var listData = [
-    {'bidang': 22, 'label': 'Lengkap'},
-    {'bidang': 78, 'label': 'Belum Lengkap'},
+    {'bidang': 135, 'label': 'Lengkap'},
+    {'bidang': 206, 'label': 'Belum Lengkap'},
   ];
   for (var i = 0; i < listData.length; i++) {
     chartData.add(DataLuasTanah(
@@ -60,7 +65,7 @@ List<DataLuasTanah> dataKategoriCard() {
 }
 
 class DataLuasTanah {
-  final String? bebas;
-  final double? belumLengkap;
-  DataLuasTanah({this.bebas, this.belumLengkap});
+  final String bebas;
+  final double belumLengkap;
+  DataLuasTanah({required this.bebas, required this.belumLengkap});
 }

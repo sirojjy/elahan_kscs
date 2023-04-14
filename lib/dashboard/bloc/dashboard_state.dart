@@ -61,12 +61,50 @@ class DashboardState extends Equatable {
 
   ///Total Luas Bidang
   final String? luasApraisal;
+  final String? luasApraisalBelum;
   final String? luasMusyawarah;
+  final String? luasMusyawarahBelum;
   final String? luasValidasi;
+  final String? luasValidasiBelum;
   final String? luasSpp;
+  final String? luasSppBelum;
   final String? luasYuridis;
+  final String? luasYuridisBelum;
   final String? luasPembayaranSpp;
+  final String? luasPembayaranSppBelum;
   final String? luasPenyerahanHasil;
+  final String? luasPenyerahanHasilBelum;
+
+  ///total nilai ganti rugi
+  final String? nilaiApraisal;
+  final String? nilaiMusyawarahBlm;
+  final String? nilaiMusyawarahSdh;
+  final String? nilaiValSdh;
+  final String? nilaiValBlm;
+  final String? nilaiSppSdh;
+  final String? nilaiSppBlm;
+  final String? nilaiYuridisSdh;
+  final String? nilaiYuridisBlm;
+  final String? nilaiBayarSdh;
+  final String? nilaiBayarBlm;
+
+  ///total Durasi : HARDCODE
+
+  ///total Issue
+  final String? issueLebakOpen;
+  final String? issueLebakClose;
+  final String? issueSerangOpen;
+  final String? issueSerangClose;
+  final String? issueTangeOpen;
+  final String? issueTangeClose;
+
+  ///Total Kelengkapan Dokumen
+  final String? penlokLengkap;
+  final String? danomLengkap;
+  final String? identitasLengkap;
+  final String? alasHakLengkap;
+  final String? petaLengkap;
+  final String? dokPendukungLengkap;
 
   ///total bidang belum lengkap
   final String? bidangLengkap;
@@ -136,12 +174,48 @@ class DashboardState extends Equatable {
 
     ///Total Luas Bidang
     this.luasApraisal,
+    this.luasApraisalBelum,
     this.luasMusyawarah,
+    this.luasMusyawarahBelum,
     this.luasValidasi,
+    this.luasValidasiBelum,
     this.luasSpp,
+    this.luasSppBelum,
     this.luasYuridis,
+    this.luasYuridisBelum,
     this.luasPembayaranSpp,
+    this.luasPembayaranSppBelum,
     this.luasPenyerahanHasil,
+    this.luasPenyerahanHasilBelum,
+
+    ///Total Nilai Ganti
+    this.nilaiApraisal,
+    this.nilaiMusyawarahBlm,
+    this.nilaiMusyawarahSdh,
+    this.nilaiValSdh,
+    this.nilaiValBlm,
+    this.nilaiSppSdh,
+    this.nilaiSppBlm,
+    this.nilaiYuridisSdh,
+    this.nilaiYuridisBlm,
+    this.nilaiBayarSdh,
+    this.nilaiBayarBlm,
+
+    ///total Issue
+    this.issueLebakOpen,
+    this.issueLebakClose,
+    this.issueSerangOpen,
+    this.issueSerangClose,
+    this.issueTangeOpen,
+    this.issueTangeClose,
+
+    ///Total Kelengkapan Dokumen
+    this.penlokLengkap,
+    this.danomLengkap,
+    this.identitasLengkap,
+    this.alasHakLengkap,
+    this.petaLengkap,
+    this.dokPendukungLengkap,
 
     ///total bidang belum lengkap
     this.bidangLengkap,
@@ -163,80 +237,116 @@ class DashboardState extends Equatable {
   @override
   // TODO: implement props
   List<Object?> get props => [
-        status,
-        message,
-        lebak,
-        serang,
-        tangerang,
-        // totalBidang,
-        luasLebak,
-        luasSerang,
-        luasTangerang,
-        nilaiLebak,
-        nilaiSerang,
-        nilaiTangerang,
+    status,
+    message,
+    lebak,
+    serang,
+    tangerang,
+    // totalBidang,
+    luasLebak,
+    luasSerang,
+    luasTangerang,
+    nilaiLebak,
+    nilaiSerang,
+    nilaiTangerang,
 
-        ///jenis tanah
-        tanahOrangLebak,
-        tanahOrangSerang,
-        tanahOrangTangerang,
-        tanahPemeLebak,
-        tanahPemeSerang,
-        tanahPemeTangerang,
-        tanahUsahaLebak,
-        tanahUsahaSerang,
-        tanahUsahaTangerang,
-        tanahTkdLebak,
-        tanahTkdSerang,
-        tanahTkdTangerang,
-        tanahWakafLebak,
-        tanahWakafSerang,
-        tanahWakafTangerang,
+    ///jenis tanah
+    tanahOrangLebak,
+    tanahOrangSerang,
+    tanahOrangTangerang,
+    tanahPemeLebak,
+    tanahPemeSerang,
+    tanahPemeTangerang,
+    tanahUsahaLebak,
+    tanahUsahaSerang,
+    tanahUsahaTangerang,
+    tanahTkdLebak,
+    tanahTkdSerang,
+    tanahTkdTangerang,
+    tanahWakafLebak,
+    tanahWakafSerang,
+    tanahWakafTangerang,
 
-        ///total jumlah bidang
-        inventarisasiReal,
-        pengumumanReal,
-        pengumumanBelum,
-        apraisalReal,
-        apraisalBelum,
-        musyawarahReal,
-        musyawarahBelum,
-        validasiReal,
-        validasiBelum,
-        sppReal,
-        sppBelum,
-        yuridisReal,
-        yuridisBelum,
-        pembayaranReal,
-        pembayaranBelum,
-        hasilReal,
-        hasilBelum,
+    ///total jumlah bidang
+    inventarisasiReal,
+    pengumumanReal,
+    pengumumanBelum,
+    apraisalReal,
+    apraisalBelum,
+    musyawarahReal,
+    musyawarahBelum,
+    validasiReal,
+    validasiBelum,
+    sppReal,
+    sppBelum,
+    yuridisReal,
+    yuridisBelum,
+    pembayaranReal,
+    pembayaranBelum,
+    hasilReal,
+    hasilBelum,
 
-        ///Total Luas Bidang
-        luasApraisal,
-        luasMusyawarah,
-        luasValidasi,
-        luasSpp,
-        luasYuridis,
-        luasPembayaranSpp,
-        luasPenyerahanHasil,
+    ///Total Luas Bidang
+    luasApraisal,
+    luasApraisalBelum,
+    luasMusyawarah,
+    luasMusyawarahBelum,
+    luasValidasi,
+    luasValidasiBelum,
+    luasSpp,
+    luasSppBelum,
+    luasYuridis,
+    luasYuridisBelum,
+    luasPembayaranSpp,
+    luasPembayaranSppBelum,
+    luasPenyerahanHasil,
+    luasPenyerahanHasilBelum,
 
-        ///total bidang belum lengkap
-        bidangLengkap,
-        bidangKurang,
+    ///Total Nilai Ganti
+    nilaiApraisal,
+    nilaiMusyawarahBlm,
+    nilaiMusyawarahSdh,
+    nilaiValSdh,
+    nilaiValBlm,
+    nilaiSppSdh,
+    nilaiSppBlm,
+    nilaiYuridisSdh,
+    nilaiYuridisBlm,
+    nilaiBayarSdh,
+    nilaiBayarBlm,
 
-        ///total kekurangan berkas
-        kurangPenlok,
-        kurangDNominatif,
-        kurangValidasiP2t,
-        kurangSpp,
-        kurangIdentitas,
-        kurangAlasHak,
-        kurangPeta,
-        kurangApraisal,
-        kurangPendukung,
-        kurangSptjp,
-      ];
+    ///total Issue
+    issueLebakOpen,
+    issueLebakClose,
+    issueSerangOpen,
+    issueSerangClose,
+    issueTangeOpen,
+    issueTangeClose,
+
+    ///Total Kelengkapan Dokumen
+    penlokLengkap,
+    danomLengkap,
+    identitasLengkap,
+    alasHakLengkap,
+    petaLengkap,
+    dokPendukungLengkap,
+
+    ///total bidang belum lengkap
+    bidangLengkap,
+    bidangKurang,
+
+    ///total kekurangan berkas
+    kurangPenlok,
+    kurangDNominatif,
+    kurangValidasiP2t,
+    kurangSpp,
+    kurangIdentitas,
+    kurangAlasHak,
+    kurangPeta,
+    kurangApraisal,
+    kurangPendukung,
+    kurangSptjp,
+  ];
 
   DashboardState copyWith({
     DashboardStateStatus? status,
@@ -290,12 +400,48 @@ class DashboardState extends Equatable {
 
     ///Total Luas Bidang
     String? luasApraisal,
+    String? luasApraisalBelum,
     String? luasMusyawarah,
+    String? luasMusyawarahBelum,
     String? luasValidasi,
+    String? luasValidasiBelum,
     String? luasSpp,
+    String? luasSppBelum,
     String? luasYuridis,
+    String? luasYuridisBelum,
     String? luasPembayaranSpp,
+    String? luasPembayaranSppBelum,
     String? luasPenyerahanHasil,
+    String? luasPenyerahanHasilBelum,
+
+    ///Total Nilai Ganti
+    String? nilaiApraisal,
+    String? nilaiMusyawarahBlm,
+    String? nilaiMusyawarahSdh,
+    String? nilaiValSdh,
+    String? nilaiValBlm,
+    String? nilaiSppSdh,
+    String? nilaiSppBlm,
+    String? nilaiYuridisSdh,
+    String? nilaiYuridisBlm,
+    String? nilaiBayarSdh,
+    String? nilaiBayarBlm,
+
+    ///total Issue
+    String? issueLebakOpen,
+    String? issueLebakClose,
+    String? issueSerangOpen,
+    String? issueSerangClose,
+    String? issueTangeOpen,
+    String? issueTangeClose,
+
+    ///Total kelengkapan Dokumen
+    String? penlokLengkap,
+    String? danomLengkap,
+    String? identitasLengkap,
+    String? alasHakLengkap,
+    String? petaLengkap,
+    String? dokPendukungLengkap,
 
     ///total bidang belum lengkap
     String? bidangLengkap,
@@ -365,12 +511,49 @@ class DashboardState extends Equatable {
 
       ///Total Luas Bidang
       luasApraisal: luasApraisal ?? this.luasApraisal,
+      luasApraisalBelum: luasApraisalBelum ?? this.luasApraisalBelum,
       luasMusyawarah: luasMusyawarah ?? this.luasMusyawarah,
+      luasMusyawarahBelum: luasMusyawarahBelum ?? this.luasMusyawarahBelum,
       luasValidasi: luasValidasi ?? this.luasValidasi,
+      luasValidasiBelum: luasValidasiBelum ?? this.luasValidasiBelum,
       luasSpp: luasSpp ?? this.luasSpp,
+      luasSppBelum: luasSppBelum ?? this.luasSppBelum,
       luasYuridis: luasYuridis ?? this.luasYuridis,
+      luasYuridisBelum: luasYuridisBelum ?? this.luasYuridisBelum,
       luasPembayaranSpp: luasPembayaranSpp ?? this.luasPembayaranSpp,
+      luasPembayaranSppBelum: luasPembayaranSppBelum ?? this.luasPembayaranSppBelum,
       luasPenyerahanHasil: luasPenyerahanHasil ?? this.luasPenyerahanHasil,
+      luasPenyerahanHasilBelum: luasPenyerahanHasilBelum ?? this.luasPenyerahanHasilBelum,
+
+      ///Total Nilai Ganti
+      nilaiApraisal: nilaiApraisal ?? this.nilaiApraisal,
+      nilaiMusyawarahBlm: nilaiMusyawarahBlm ?? this.nilaiMusyawarahBlm,
+      nilaiMusyawarahSdh: nilaiMusyawarahSdh ?? this.nilaiMusyawarahSdh,
+      nilaiValSdh: nilaiValSdh ?? this.nilaiValSdh,
+      nilaiValBlm: nilaiValBlm ?? this.nilaiValBlm,
+      nilaiSppSdh: nilaiSppSdh ?? this.nilaiSppSdh,
+      nilaiSppBlm: nilaiSppBlm ?? this.nilaiSppBlm,
+      nilaiYuridisSdh: nilaiYuridisSdh ?? this.nilaiYuridisSdh,
+      nilaiYuridisBlm: nilaiYuridisBlm ?? this.nilaiYuridisBlm,
+      nilaiBayarSdh: nilaiBayarSdh ?? this.nilaiBayarSdh,
+      nilaiBayarBlm: nilaiBayarBlm ?? this.nilaiBayarBlm,
+
+      ///total Issue
+      issueLebakOpen: issueLebakOpen ?? this.issueLebakOpen,
+      issueLebakClose: issueLebakClose ?? this.issueLebakClose,
+      issueSerangOpen: issueSerangOpen ?? this.issueSerangOpen,
+      issueSerangClose: issueSerangClose ?? this.issueSerangClose,
+      issueTangeOpen: issueTangeOpen ?? this.issueTangeOpen,
+      issueTangeClose: issueTangeClose ?? this.issueTangeClose,
+
+      ///Total Kelengkapan dokumen
+      penlokLengkap: penlokLengkap ?? this.penlokLengkap,
+      danomLengkap: danomLengkap ?? this.danomLengkap,
+      identitasLengkap: identitasLengkap ?? this.identitasLengkap,
+      alasHakLengkap: alasHakLengkap ?? this.alasHakLengkap,
+      petaLengkap: petaLengkap ?? this.petaLengkap,
+      dokPendukungLengkap:
+      dokPendukungLengkap ?? this.dokPendukungLengkap,
 
       ///total bidang belum lengkap
       bidangLengkap: bidangLengkap ?? this.bidangLengkap,

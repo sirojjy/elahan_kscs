@@ -36,6 +36,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children:  const [
                   SizedBox(height: 10,),
 
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Center(child: Text('Total Progres Keseluruhan', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),),
+                  ),
+                  ProgresTanahAll(),
+                  SizedBox(height: 10,),
+
+                  TotalProgresKeseluruhan(),
+                  SizedBox(height: 10,),
+
                   SliderCard(),
                   SizedBox(height: 10,),
                   
@@ -44,16 +54,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     child: Center(child: Text('Klasifikasi Jenis Tanah per Kabupaten', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),),
                   ),
                   KlasifikasiJenisTanah(),
-                  SizedBox(height: 10,),
-
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(child: Text('Total Progres Keseluruhan', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),),
-                  ),
-                  ProgresTanahAll(),
-                  SizedBox(height: 10,),
-                  
-                  TotalProgresKeseluruhan(),
                   SizedBox(height: 10,),
                 ],
               ),
@@ -67,7 +67,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ontap: () {
                 Navigator.pushNamed(context, CustomRoutes.inventarisasi);
               },
-              icon: const Icon(Icons.add_a_photo),
+              icon: const Icon(Icons.analytics),
             ),
           ],
         )
