@@ -29,13 +29,17 @@ class _GisMap2State extends State<GisMap2> {
     //   dataLabelMapper: (int index) => _data[index].stateCode,
     //   shapeColorValueMapper: (int index) => _data[index].color,
     // );
-    _zoomPanBehavior = MapZoomPanBehavior();
+    _zoomPanBehavior = MapZoomPanBehavior()
+      ..zoomLevel = 3
+      ..maxZoomLevel = 10
+      ..minZoomLevel = 2
+      ..enableDoubleTapZooming = true
+      ..enablePinching = true;
     super.initState();
     _sublayerSource = const MapShapeSource.asset(
       'assets/gis/africa.json',
       shapeDataField: 'name',
     );
-
 
   }
   Widget build(BuildContext context) {
@@ -81,32 +85,91 @@ class _GisMap2State extends State<GisMap2> {
       //         Theme.of(context).textTheme.bodySmall!.fontSize),
       //   ),
       // ),
-        child: SfMaps(
-          layers: <MapLayer>[
-            // MapShapeLayer(source: const MapShapeSource.asset("assets/world_map.json",
-            MapTileLayer(
-              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-              initialFocalLatLng: MapLatLng(-6.3522,106.6251),
-              initialZoomLevel: 3,
-              zoomPanBehavior: _zoomPanBehavior,
-            ),
-            MapShapeLayer(
-
-              source: const MapShapeSource.asset("assets/gis/9426.json",
-              shapeDataField: "coordinates",
-              ),
-            // sublayers: [
-            //   MapShapeSublayer(
-            //     source: MapShapeSource.asset(
-            //       'assets/gis/africa.json',
-            //       shapeDataField: 'name',
+        child:
+        FlutterMap(
+          options: MapOptions(
+            center: LatLng(-7.24917, 112.75083), // koordinat pusat peta
+            zoom: 13.0, // level zoom
+          ),
+          children: [
+            // TileLayerOptions(
+            //   urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            //   subdomains: ['a', 'b', 'c'],
+            // ),
+            // PolygonLayerOptions(
+            //   polygons: [
+            //     Polygon(
+            //       points: [
+            //         LatLng(-7.24917, 112.75083),
+            //         LatLng(-7.24917, 112.78083),
+            //         LatLng(-7.27917, 112.78083),
+            //         LatLng(-7.27917, 112.75083),
+            //       ],
+            //       color: Colors.blue.withOpacity(0.3),
+            //       borderColor: Colors.blue.withOpacity(0.7),
+            //       borderStrokeWidth: 2,
+            //       builder: (context) => Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           Text(
+            //             label,
+            //             style: TextStyle(
+            //               fontWeight: FontWeight.bold,
+            //               color: Colors.black,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
             //     ),
-            //   )
-            // ],
-            ),
-
+            //   ],
+            // ),
           ],
-        ),
+        )
+        // SfMaps(
+        //   layers: [
+        //     // MapTileLayer(
+        //     //   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        //     //   initialZoomLevel: 3,
+        //     //   initialFocalLatLng: MapLatLng(35, 0),
+        //     //   // controller: _zoomPanBehavior,
+        //     // ),
+        //     MapShapeLayer(
+        //       source: MapShapeSource.asset(
+        //         'https://tile.openstreetmap.org/{z}/{x}/{y}.png', // berisi data bentuk kotak dalam format GeoJSON
+        //         // shapeDataField: 'coordinates',
+        //       ),
+        //       // properti untuk menampilkan bentuk kotak di atas peta
+        //       color: Colors.red,
+        //       strokeWidth: 2,
+        //       strokeColor: Colors.black,
+        //     ),
+        //   ],
+        // ),
+        // SfMaps(
+        //   layers: <MapLayer>[
+        //     // MapShapeLayer(source: const MapShapeSource.asset("assets/world_map.json",
+        //     MapTileLayer(
+        //       urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        //       initialFocalLatLng: MapLatLng(-6.3522,106.6251),
+        //       initialZoomLevel: 3,
+        //       zoomPanBehavior: _zoomPanBehavior,
+        //     ),
+        //     MapShapeLayer(
+        //       source: const MapShapeSource.asset("https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        //       // shapeDataField: "coordinates",
+        //       ),
+        //     // sublayers: [
+        //     //   MapShapeSublayer(
+        //     //     source: MapShapeSource.asset(
+        //     //       'assets/gis/africa.json',
+        //     //       shapeDataField: 'name',
+        //     //     ),
+        //     //   )
+        //     // ],
+        //     ),
+        //
+        //   ],
+        // ),
     );
   }
 }
