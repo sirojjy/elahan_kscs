@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rectangle"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.2969, 106.393
+            ],
+            [
+              -6.2532, 106.3628
+            ],
+            [
+              -6.2177, 106.4067
+            ],
+            [
+              -6.2122, 106.4616
+            ],
+            [
+              -6.2409, 106.5049
+            ],
+            [
+              -6.3112, 106.5303
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

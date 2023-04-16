@@ -17,25 +17,29 @@ class _GisMap2State extends State<GisMap2> {
   late MapShapeSource _mapSource;
   late MapZoomPanBehavior _zoomPanBehavior;
   late MapShapeSource _sublayerSource;
+  late MapShapeSource _mapShapeSource;
 
 
   void initState() {
-    _mapSource = MapShapeSource.asset(
-      'assets/gis/9426.json',
-      shapeDataField: 'coordinates',
-      dataCount: _data.length,
-      primaryValueMapper: (int index) => _data[index].state,
-      dataLabelMapper: (int index) => _data[index].stateCode,
-      shapeColorValueMapper: (int index) => _data[index].color,
-    );
+    // _mapSource = MapShapeSource.asset(
+    //   'assets/gis/9426.json',
+    //   shapeDataField: 'coordinates',
+    //   dataCount: _data.length,
+    //   primaryValueMapper: (int index) => _data[index].state,
+    //   dataLabelMapper: (int index) => _data[index].stateCode,
+    //   shapeColorValueMapper: (int index) => _data[index].color,
+    // );
     _zoomPanBehavior = MapZoomPanBehavior();
     super.initState();
     _sublayerSource = const MapShapeSource.asset(
       'assets/gis/africa.json',
       shapeDataField: 'name',
     );
+
+
   }
   Widget build(BuildContext context) {
+
     return Container(
       padding: EdgeInsets.all(5),
         height: 250,
@@ -79,25 +83,44 @@ class _GisMap2State extends State<GisMap2> {
       // ),
         child: SfMaps(
           layers: <MapLayer>[
-            MapShapeLayer(source: const MapShapeSource.asset("assets/world_map.json",
-              shapeDataField: "continent",),
-            sublayers: [
-              MapShapeSublayer(source: _sublayerSource,
-
-              )
-            ],
-            ),
+            // MapShapeLayer(source: const MapShapeSource.asset("assets/world_map.json",
             MapTileLayer(
               urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
               initialFocalLatLng: MapLatLng(-6.3522,106.6251),
-              initialZoomLevel: 9,
+              initialZoomLevel: 3,
               zoomPanBehavior: _zoomPanBehavior,
             ),
+            MapShapeLayer(
+
+              source: const MapShapeSource.asset("assets/gis/9426.json",
+              shapeDataField: "coordinates",
+              ),
+            // sublayers: [
+            //   MapShapeSublayer(
+            //     source: MapShapeSource.asset(
+            //       'assets/gis/africa.json',
+            //       shapeDataField: 'name',
+            //     ),
+            //   )
+            // ],
+            ),
+
           ],
         ),
     );
   }
 }
+
+List<List<List<double>>> rectangleCoordinates = [
+  [
+    [-6.2969, 106.393],
+    [-6.2532, 106.3628],
+    [-6.2177, 106.4067],
+    [-6.2122, 106.4616],
+    [-6.2409, 106.5049],
+    [-6.3112, 106.5303]
+  ]
+];
 
 /// Collection of Australia state code data.
 class Model {
