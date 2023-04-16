@@ -1,6 +1,7 @@
 import 'package:elahan_kscs/dashboard/component/donut_chart_bidang.dart';
 import 'package:elahan_kscs/dashboard/component/donut_chart_luas.dart';
 import 'package:elahan_kscs/dashboard/component/gis.dart';
+import 'package:elahan_kscs/dashboard/component/gis2.dart';
 import 'package:elahan_kscs/dashboard/component/title_card_component.dart';
 import 'package:flutter/material.dart';
 class ProgresTanahAll extends StatelessWidget {
@@ -19,6 +20,8 @@ class ProgresTanahAll extends StatelessWidget {
           ),
           SizedBox(height: 10,),
           GisMap(),
+          SizedBox(height: 10,),
+          GisMap2(),
           SizedBox(height: 10,),
           DonutChart(),
           SizedBox(height: 10,),
