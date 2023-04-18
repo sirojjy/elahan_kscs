@@ -36,7 +36,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget{
             child: IconButton(
               icon: const Icon(Icons.person),
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileUser()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileUser()));
               },
             ),
 

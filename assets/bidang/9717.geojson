@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "Belum",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Name": "78",   "description": null }, "geometry": { "type": "Polygon", "coordinates": [ [[ 106.339920353297103, -6.405828658171295 ], [ 106.340713003637902, -6.40613570367284 ], [ 106.340727676565905, -6.406007696257852 ], [ 106.339875209393099, -6.405677654881263 ], [ 106.339920353297103, -6.405828658171295 ]] ] } }
+
+]
+}
