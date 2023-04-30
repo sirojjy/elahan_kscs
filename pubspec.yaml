@@ -53,6 +53,7 @@ dependencies:
   geojson: ^1.0.0
   flutter_map_tappable_polyline: ^4.0.0+1
   geojson_vi: ^2.0.7
+  path_provider: ^2.0.14
 
 dev_dependencies:
   flutter_test:

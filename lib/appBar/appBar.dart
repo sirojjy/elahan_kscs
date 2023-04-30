@@ -2,6 +2,7 @@ import 'package:elahan_kscs/profile/screen/profil_user.dart';
 import 'package:flutter/material.dart';
 
 import '../constant.dart';
+import '../profile/screen/profil.dart';
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget{
   final String? judul;
@@ -36,7 +37,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget{
             child: IconButton(
               icon: const Icon(Icons.person),
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileUser()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Profil()));
               },
             ),
 
