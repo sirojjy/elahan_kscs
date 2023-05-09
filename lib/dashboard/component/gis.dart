@@ -1,126 +1,408 @@
+import 'dart:io';
+
+import 'package:elahan_kscs/appBar/appBar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart'; // Suitable for most situations
-// import 'package:flutter_map/plugin_api.dart'; // Only import if required functionality is not exposed by default
+import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart';
 import 'package:latlong2/latlong.dart';
-// import 'package:latlng/latlng.dart';
-import 'package:syncfusion_flutter_maps/maps.dart';
+import 'dart:convert';
+import 'dart:async';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import '../../custom_routes.dart';
+import 'package:http/http.dart' as http;
 
 class GisMap extends StatefulWidget {
-   GisMap({Key? key}) : super(key: key);
+  GisMap({Key? key}) : super(key: key);
   @override
   State<GisMap> createState() => _GisMapState();
 }
 
 class _GisMapState extends State<GisMap> {
-  late MapShapeSource _dataSource;
+  // late List<LatLng> filledPoints =[];
+  // Future<void> _loadGeoJSON(String file) async {
+  //   final jsonString = await rootBundle.loadString('assets/bidang/9498.geojson');
+  //   final geojson = json.decode(jsonString);
+  //   final coordinates = geojson['features'][0]['geometry']['coordinates'][0];
+  //   setState(() {
+  //     filledPoints.addAll(coordinates
+  //         .map<LatLng>((coord) => LatLng(coord[1], coord[0]))
+  //         .toList());
+  //   });
+  // }
+
+  ///mengambil geojson dari folder
+  // late List<List<LatLng>> filledPointsList = [];
+  // Future<void> _loadGeoJSON(String filename) async {
+  //   final directory = await getApplicationDocumentsDirectory();
+  //   final path = directory.path + '/assets/bidang/';
+  //   final dir = Directory(path);
+  //   await dir.list().forEach((file) async {
+  //     if (file.path.endsWith('.geoJson')) {
+  //       final jsonString = await rootBundle.loadString(file.path);
+  //       final geojson = json.decode(jsonString);
+  //       final coordinates = geojson['features'][0]['geometry']['coordinates'][0];
+  //       final filledPoints = coordinates
+  //           .map<LatLng>((coord) => LatLng(coord[1], coord[0]))
+  //           .toList();
+  //       setState(() {
+  //         filledPointsList.add(filledPoints);
+  //         print('data : $filledPointsList');
+  //       });
+  //     }
+  //   },
+  //   );}
+
+  ///mengambil geojson dari list manual
+
+  // late List<List<LatLng>> filledPointsList = [];
+  // List<String> nisList = [];
+  // List<String> statusList = [];
+  // List<double> luasList = [];
+  //
+  // Future<void> _loadGeoJSON(String filename) async {
+  //   final jsonString = await rootBundle.loadString('assets/bidang/$filename');
+  //   if (jsonString != null) {
+  //     final geojson = json.decode(jsonString);
+  //     final feature = geojson['features'][0];
+  //     final coordinates = feature['geometry']['coordinates'][0];
+  //     final filledPoints = coordinates
+  //         .map<LatLng>((coord) => LatLng(coord[1], coord[0]))
+  //         .toList();
+  //     final properties = feature['properties'];
+  //     final nis = properties['NIS'];
+  //     final status = properties['STATUS'];
+  //     final luas = properties['LUAS'];
+  //     print('nis $nis');
+  //     print('status $status');
+  //     print('luas $luas');
+  //     setState(() {
+  //       filledPointsList.add(filledPoints);
+  //       nisList.add(nis ?? '');
+  //       statusList.add(status ?? '');
+  //       luasList.add(luas ?? 0);
+  //     });
+  //   }
+  // }
+  ///mengambil geojson dari URL
+  late List<List<LatLng>> filledPointsList = [];
+  List<String> nisList = [];
+  List<String> statusList = [];
+  List<double> luasList = [];
+  // Variabel yang akan menyimpan daftar URL dari API geojson
+  List<String> _urlList = [];
+
+// Fungsi untuk mengambil daftar URL dari API geojson
+  Future<List<String>> _fetchURLList(String url) async {
+    // Mengirimkan permintaan GET ke URL API
+    final response = await http.get(Uri.parse(url));
+
+    // Mendekode data JSON dari respons API
+    final jsonData = json.decode(response.body);
+
+    // Looping setiap data pada jsonData
+    for (var data in jsonData) {
+      // Mengambil nilai "link_gis" pada setiap data dan menggabungkannya dengan URL dasar
+      final linkGis = data['link_gis'];
+      final url = 'http://123.100.226.123:1445/Mobile/gis/$linkGis';
+
+      // Menambahkan URL yang sudah digabungkan ke dalam _urlList
+      _urlList.add(url);
+    }
+    print('data geojson $_urlList');
+    // Mengembalikan daftar URL yang sudah diambil
+    return _urlList;
+  }
+
+// Fungsi untuk mengambil data geojson dari URL dan memprosesnya
+  Future<void> _loadGeoJSON() async {
+    // Looping setiap URL pada _urlList
+    for (var url in _urlList) {
+      // Mengirimkan permintaan GET ke URL geojson
+      final response = await http.get(Uri.parse(url));
+
+      // Mengecek apakah respons sukses (kode status 200)
+      if (response.statusCode == 200) {
+        // Mendekode data JSON dari respons API
+        final geojson = json.decode(response.body);
+
+        // Mengambil data koordinat dari geojson
+        final feature = geojson['features'][0];
+        final coordinates = feature['geometry']['coordinates'][0];
+        final filledPoints = coordinates
+            .map<LatLng>((coord) => LatLng(coord[1], coord[0]))
+            .toList();
+
+        // Mengambil data atribut dari geojson
+        final properties = feature['properties'];
+        final nis = properties['NIS'];
+        final status = properties['STATUS'];
+        final luas = properties['LUAS'];
+
+        // Memperbarui state aplikasi dengan data koordinat dan atribut
+        setState(() {
+          filledPointsList.add(filledPoints);
+          nisList.add(nis ?? '');
+          statusList.add(status ?? '');
+          luasList.add(luas ?? 0);
+        });
+      } else {
+        // Melemparkan exception jika respons tidak sukses
+        throw Exception('Gagal mengambil data geojson dari $url');
+      }
+    }
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   ///daftar file geo json yang dipanggil
+  //   final fileList = ["9498.geojson","9520.geojson","9521.geojson","9522.geojson","9523.geojson","9524.geojson","9525.geojson","9526.geojson","9527.geojson","9528.geojson","9529.geojson","9530.geojson","9531.geojson","9532.geojson","9533.geojson","9584.geojson","9586.geojson","9589.geojson","9590.geojson","9591.geojson","9592.geojson","9593.geojson","9595.geojson","9596.geojson","9598.geojson","9602.geojson","9603.geojson","9605.geojson","9606.geojson","9607.geojson","9608.geojson","9612.geojson","9613.geojson","9615.geojson","9616.geojson","9617.geojson","9618.geojson","9620.geojson","9622.geojson","9627.geojson","9629.geojson","9630.geojson","9631.geojson","9632.geojson","9633.geojson","9634.geojson","9635.geojson","9636.geojson","9637.geojson","9638.geojson","9639.geojson","9643.geojson","9646.geojson","9674.geojson","9676.geojson","9677.geojson","9678.geojson","9679.geojson","9680.geojson","9681.geojson","9682.geojson","9683.geojson","9684.geojson","9685.geojson","9686.geojson","9687.geojson","9688.geojson","9689.geojson","9690.geojson","9691.geojson","9692.geojson","9694.geojson","9695.geojson","9697.geojson","9698.geojson","9699.geojson","9700.geojson","9701.geojson","9705.geojson","9706.geojson","9709.geojson","9710.geojson","9713.geojson","9714.geojson","9715.geojson","9717.geojson","9718.geojson","9719.geojson","9720.geojson","9721.geojson","9727.geojson","9728.geojson","9729.geojson","9730.geojson","9731.geojson","9732.geojson","9733.geojson","9734.geojson","9749.geojson","9755.geojson","9764.geojson","9770.geojson","9771.geojson","9778.geojson","9780.geojson","9795.geojson","9799.geojson","9801.geojson","9804.geojson","9805.geojson","9807.geojson","9809.geojson","9818.geojson","9823.geojson","9825.geojson","9826.geojson","9827.geojson","9828.geojson","9829.geojson","9830.geojson","9831.geojson","9833.geojson","9834.geojson"];
+  //   for (final file in fileList) {
+  //     _loadGeoJSON(file);
+  //   }
+  // }
   @override
   void initState() {
-    _dataSource = const MapShapeSource.network(
-      'http://www.json-generator.com/api/json/get/bVqXoJvfjC?indent=2',
-      shapeDataField: 'name',
-    );
     super.initState();
+    final url = 'http://123.100.226.123:1445/Mobile/gis';
+    _fetchURLList(url).then((urlList) {
+      _urlList = urlList;
+      _loadGeoJSON();
+    });
   }
+
   Widget build(BuildContext context) {
+    // final polygonPoints = filledPoints ?? [];
     return Container(
         height: 250,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: const Offset(0, 3),
-              ),
-            ]),
-        child: SfMaps(
-          layers: [
-            MapShapeLayer(source: _dataSource),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: FlutterMap(
+          options: MapOptions(
+            center: LatLng(
+                -6.398649960024949, 106.3233937643756), // koordinat pusat peta
+            zoom: 17.0, // level zoom
+          ),
+          children: [
+            MarkerLayer(
+              markers: [
+                Marker(
+                    point: LatLng(-6.394087133839745, 106.3073946427119),
+                    builder: (context) => Container(
+                        child: const Text(
+                          'BELUM',
+                          style: TextStyle(color: Colors.white),
+                        )
+                    )
+                )
+              ],
+            ),
+            TileLayer(
+              // urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+              // userAgentPackageName: 'com.example.elahan_kscs',
+              urlTemplate: "https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+              subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            ),
+            for (final polygonPoints in filledPointsList)
+              if (polygonPoints.isNotEmpty) PolygonLayer(
+                polygons: [
+                  Polygon(
+                    points: polygonPoints,
+                    isFilled: true,
+                    color: Colors.blue,
+                    borderColor: Colors.purple,
+                    borderStrokeWidth: 1,
+                    label: '$nisList',
+                  )
+                ],
+              )
+            /// LOKASI TappablePolylineLayer
+
           ],
         )
-      // FlutterMap(
-      //   options: MapOptions(
-      //     center: LatLng(-6.1754, 106.8272),
-      //     // center: LatLng(116.725376867973, -0.962617696290662),
-      //     zoom: 5,
-      //   ),
-      //   children: [
-      //     TileLayer(
-      //       urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      //       userAgentPackageName: 'dev.fleaflet.flutter_map.example',
-      //     ),
-      //     PolygonLayer(
-      //       polygonCulling: false,
-      //       polygons: [
-      //         Polygon(
-      //             points: [
-      //               LatLng(116.725376867973, -0.962617696290662),
-      //               LatLng(116.725383870535, -0.962680947800484),
-      //               LatLng(116.725361972984, -0.962680955721901),
-      //               LatLng(116.725358658856, -0.962632562405222),
-      //               LatLng(116.725356113994, -0.962610169593126),
-      //               LatLng(116.725376867973, -0.962617696290662),
-      //
-      //             ],
-      //             // points: dataGis["features"][0]["geometry"]["coordinates"][0],
-      //             color: Colors.blueAccent
-      //         ),
-      //       ],
-      //     )
-      //   ],
-      // )
     );
   }
 }
 
-Map<String, dynamic> dataGis = {
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              116.725376867973,
-              -0.962617696290662
-            ],
-            [
-              116.725383870535,
-              -0.962680947800484
-            ],
-            [
-              116.725361972984,
-              -0.962680955721901
-            ],
-            [
-              116.725358658856,
-              -0.962632562405222
-            ],
-            [
-              116.725356113994,
-              -0.962610169593126
-            ],
-            [
-              116.725376867973,
-              -0.962617696290662
-            ]
-          ]
-        ]
-      },
-      "properties": {
-        "fill-opacity": 0,
-        "stroke-opacity": 1,
-        "stroke": "#ff0000",
-        "TEXTSTRING": "Syarak",
-        "NIS": 51,
-        "STATUS": "BELUM",
-        "LUAS": 0.00169781389,
-        "ALAS_HAK": "SKT/Segel"
-      }
-    }
-  ]
-};
+
+// TappablePolylineLayer(
+// polylines: [
+// TaggedPolyline(
+// points: polygonPoints,
+// color: Colors.transparent,
+// strokeWidth: 20.0,
+// tag: '001',
+// ),
+// ],
+// onTap: (point, polyline) {
+// showDialog(
+// context: context,
+// builder: (BuildContext context) {
+// return AlertDialog(
+// title: Center(child: Text('Data Bidang')),
+// content: IntrinsicHeight(
+// child: Column(
+// children: [
+// Table(
+// columnWidths: const <int, TableColumnWidth>{
+// 0: IntrinsicColumnWidth(),
+// 1: FlexColumnWidth(),
+// },
+// children: <TableRow>[
+// TableRow(children: [
+// SizedBox(
+// height: 30,
+// child: Padding(
+// padding: const EdgeInsets.only(right: 30),
+// child: Text(
+// 'Desa',
+// style: Theme.of(context)
+//     .textTheme
+//     .bodyLarge,
+// ),
+// ),
+// ),
+// SizedBox(
+// height: 30,
+// child: Text(
+// ': CIUYAH',
+// style:
+// Theme.of(context).textTheme.bodyLarge,
+// ),
+// ),
+// ]),
+// TableRow(children: [
+// SizedBox(
+// height: 30,
+// child: Padding(
+// padding: const EdgeInsets.only(right: 30),
+// child: Text(
+// 'NIB',
+// style: Theme.of(context)
+//     .textTheme
+//     .bodyLarge,
+// ),
+// ),
+// ),
+// SizedBox(
+// height: 30,
+// child: Text(
+// ': 00086',
+// style:
+// Theme.of(context).textTheme.bodyLarge,
+// ),
+// ),
+// ]),
+// TableRow(children: [
+// SizedBox(
+// height: 30,
+// child: Padding(
+// padding: const EdgeInsets.only(right: 30),
+// child: Text(
+// 'Nama Pemilik',
+// style: Theme.of(context)
+//     .textTheme
+//     .bodyLarge,
+// ),
+// ),
+// ),
+// SizedBox(
+// height: 30,
+// child: Text(
+// ': ANIBAH',
+// style:
+// Theme.of(context).textTheme.bodyLarge,
+// ),
+// ),
+// ]),
+// TableRow(children: [
+// SizedBox(
+// height: 30,
+// child: Padding(
+// padding: const EdgeInsets.only(right: 30),
+// child: Text(
+// 'Jenis Tanah',
+// style: Theme.of(context)
+//     .textTheme
+//     .bodyLarge,
+// ),
+// ),
+// ),
+// SizedBox(
+// height: 30,
+// child: Text(
+// ': Tanah Warga',
+// style:
+// Theme.of(context).textTheme.bodyLarge,
+// ),
+// ),
+// ]),
+// TableRow(children: [
+// SizedBox(
+// height: 30,
+// child: Padding(
+// padding: const EdgeInsets.only(right: 30),
+// child: Text(
+// 'Luas Tanah',
+// style: Theme.of(context)
+//     .textTheme
+//     .bodyLarge,
+// ),
+// ),
+// ),
+// SizedBox(
+// height: 30,
+// child: Text(
+// ': 660 m2',
+// style:
+// Theme.of(context).textTheme.bodyLarge,
+// ),
+// ),
+// ]),
+// ],
+// ),
+// ElevatedButton(
+// onPressed: () {Navigator.pushNamed(context, CustomRoutes.detailInventarisasi);}, child: Text('Lihat Detail'))
+// ],
+// ),
+// ),
+// actions: [
+// TextButton(
+// onPressed: () => Navigator.of(context).pop(),
+// child: Text('OK'),
+// ),
+// ],
+// );
+// },
+// );
+// },
+// ),
+
+// final filledPoints = <LatLng>[
+//   LatLng(-6.398649960024949, 106.3233937643756),
+//   LatLng(-6.398763238150509, 106.3233745287781),
+//   LatLng(-6.398784296084945, 106.3234502506137),
+//   LatLng(-6.398755122203054, 106.3236111839551),
+//   LatLng(-6.398711762324687, 106.3236267121281),
+//   LatLng(-6.398649960024949, 106.3233937643756),
+// ];
+// final polylinePoints = filledPoints
+//     .map((point) => LatLng(point.latitude, point.longitude))
+//     .toList();
+
+// class GetJsonData{
+//   GetJsonData({
+//     this.id
+// })
+// }

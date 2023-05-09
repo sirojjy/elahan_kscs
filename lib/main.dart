@@ -3,6 +3,7 @@ import 'package:elahan_kscs/auth/screen/login_screen.dart';
 import 'package:elahan_kscs/custom_routes.dart';
 import 'package:elahan_kscs/dashboard/bloc/dashboard_bloc.dart';
 import 'package:elahan_kscs/dashboard/screen/dashboard_screen.dart';
+import 'package:elahan_kscs/dashboard/screen/menu_utama.dart';
 import 'package:elahan_kscs/menu/inventarisasi/bloc/inventarisasi_bloc.dart';
 import 'package:elahan_kscs/menu/inventarisasi/screen/detail_inven.dart';
 import 'package:elahan_kscs/menu/inventarisasi/screen/inventarisasi.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
       ),
       home: LoginScreen(),
       routes: {
+        CustomRoutes.menuUtama : (context) => MenuUtama(),
         CustomRoutes.dashboard : (context) => DashboardScreen(),
         CustomRoutes.inventarisasi : (context) => Inventarisasi(),
         CustomRoutes.detailInventarisasi : (context) => DetailInventarisasi(),

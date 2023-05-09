@@ -53,7 +53,8 @@ class _ProfilState extends State<Profil> {
   //   );}
 
     ///mengambil geojson dari list manual
-    late List<List<LatLng>> filledPointsList = [];
+
+  late List<List<LatLng>> filledPointsList = [];
     List<String> nisList = [];
     List<String> statusList = [];
     List<double> luasList = [];
@@ -109,7 +110,7 @@ class _ProfilState extends State<Profil> {
                   options: MapOptions(
                     center: LatLng(
                         -6.398649960024949, 106.3233937643756), // koordinat pusat peta
-                    zoom: 18.0, // level zoom
+                    zoom: 17.0, // level zoom
                   ),
                   children: [
                     MarkerLayer(

@@ -20,65 +20,59 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: MyAppBar(
-        judul: 'Dashboard',
+        judul: 'Dashboard KSCS',
       ),
       body: SafeArea(
-        child: (HawkFabMenu(
-          icon: AnimatedIcons.menu_arrow,
-          fabColor: primaryColor,
-          iconColor: Colors.white,
-          hawkFabMenuController: hawkFabMenuController,
-          body: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                children:  const [
-                  SizedBox(height: 10,),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children:  const [
+                SizedBox(height: 10,),
 
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(child: Text('Total Progres Keseluruhan', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),),
-                  ),
-                  ProgresTanahAll(),
-                  SizedBox(height: 10,),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Center(child: Text('Total Progres Keseluruhan', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),),
+                ),
+                ProgresTanahAll(),
+                SizedBox(height: 10,),
 
-                  TotalProgresKeseluruhan(),
-                  SizedBox(height: 10,),
+                TotalProgresKeseluruhan(),
+                SizedBox(height: 10,),
 
-                  SliderCard(),
-                  SizedBox(height: 10,),
-                  
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(child: Text('Klasifikasi Jenis Tanah per Kabupaten', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),),
-                  ),
-                  KlasifikasiJenisTanah(),
-                  SizedBox(height: 10,),
-                ],
-              ),
+                SliderCard(),
+                SizedBox(height: 10,),
+
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Center(child: Text('Klasifikasi Jenis Tanah per Kabupaten', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),),
+                ),
+                KlasifikasiJenisTanah(),
+                SizedBox(height: 10,),
+              ],
             ),
           ),
-
-          ///BUTTON MENU
-          items: [
-            HawkFabMenuItem(
-              label: 'Inventarisasi',
-              ontap: () {
-                Navigator.pushNamed(context, CustomRoutes.inventarisasi);
-              },
-              icon: const Icon(Icons.analytics),
-            ),
-          ],
         )
-      )),
-      // floatingActionButton: FloatingActionButton(onPressed: () {
-      //   showDialog(
-      //     context: context,
-      //     builder: (BuildContext context) => MenuButton1(context),
-      //   );
-      // },
-      // child: Icon(Icons.menu),),
+      ),
     );
   }
 }
+
+// List<HawkFabMenuItem> itemsMenu = [
+//   HawkFabMenuItem(
+//     label: 'Dashboard',
+//     ontap: () {
+//       Navigator.pushNamed(CustomRoutes.dashboard);
+//     },
+//     icon: const Icon(Icons.dashboard),
+//   ),
+//   HawkFabMenuItem(
+//     label: 'Inventarisasi',
+//     ontap: () {
+//       Navigator.pushNamed( CustomRoutes.inventarisasi);
+//     },
+//     icon: const Icon(Icons.analytics),
+//   ),
+// ];
