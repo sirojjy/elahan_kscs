@@ -90,65 +90,58 @@ class _GisMapState extends State<GisMap> {
   List<String> statusList = [];
   List<double> luasList = [];
   // Variabel yang akan menyimpan daftar URL dari API geojson
-  List<String> _urlList = [];
+  late List<String> geoJsonName = [];
 
-// Fungsi untuk mengambil daftar URL dari API geojson
-  Future<List<String>> _fetchURLList(String url) async {
-    // Mengirimkan permintaan GET ke URL API
+  @override
+  void initState() {
+    super.initState();
+    filledPointsList = [];
+    nisList = [];
+    statusList = [];
+    luasList = [];
+    fetchGeoJSONNames();
+  }
+  Future<void> fetchGeoJSONNames() async {
+    final url = 'http://123.100.226.123:1445/Mobile/gis';
     final response = await http.get(Uri.parse(url));
-
-    // Mendekode data JSON dari respons API
-    final jsonData = json.decode(response.body);
-
-    // Looping setiap data pada jsonData
-    for (var data in jsonData) {
-      // Mengambil nilai "link_gis" pada setiap data dan menggabungkannya dengan URL dasar
-      final linkGis = data['link_gis'];
-      final url = 'http://123.100.226.123:1445/Mobile/gis/$linkGis';
-
-      // Menambahkan URL yang sudah digabungkan ke dalam _urlList
-      _urlList.add(url);
+    print('data respon $response');
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body) as List<dynamic>;
+      print('data jsonData $jsonData');
+      for (var data in jsonData) {
+        final linkGis = data['link_gis'] as String;
+        geoJsonName.add(linkGis);
+      }
+      print('data jsonData $geoJsonName');
+      // Setelah mendapatkan nama-nama file GeoJSON, panggil fungsi untuk mengambil koordinat
+      fetchGeoJSONCoordinates();
+    } else {
+      throw Exception('Failed to fetch GeoJSON names');
     }
-    print('data geojson $_urlList');
-    // Mengembalikan daftar URL yang sudah diambil
-    return _urlList;
   }
 
+  ///http://123.100.226.123:1445/file_uploads/bidang/
+
 // Fungsi untuk mengambil data geojson dari URL dan memprosesnya
-  Future<void> _loadGeoJSON() async {
-    // Looping setiap URL pada _urlList
-    for (var url in _urlList) {
-      // Mengirimkan permintaan GET ke URL geojson
+  Future<void> fetchGeoJSONCoordinates() async {
+    for (var name in geoJsonName) {
+      final url = 'http://123.100.226.123:1445/file_uploads/bidang/$name';
       final response = await http.get(Uri.parse(url));
 
-      // Mengecek apakah respons sukses (kode status 200)
       if (response.statusCode == 200) {
-        // Mendekode data JSON dari respons API
         final geojson = json.decode(response.body);
 
-        // Mengambil data koordinat dari geojson
         final feature = geojson['features'][0];
         final coordinates = feature['geometry']['coordinates'][0];
         final filledPoints = coordinates
             .map<LatLng>((coord) => LatLng(coord[1], coord[0]))
             .toList();
 
-        // Mengambil data atribut dari geojson
-        final properties = feature['properties'];
-        final nis = properties['NIS'];
-        final status = properties['STATUS'];
-        final luas = properties['LUAS'];
-
-        // Memperbarui state aplikasi dengan data koordinat dan atribut
         setState(() {
           filledPointsList.add(filledPoints);
-          nisList.add(nis ?? '');
-          statusList.add(status ?? '');
-          luasList.add(luas ?? 0);
         });
       } else {
-        // Melemparkan exception jika respons tidak sukses
-        throw Exception('Gagal mengambil data geojson dari $url');
+        throw Exception('Failed to fetch GeoJSON coordinates');
       }
     }
   }
@@ -162,15 +155,15 @@ class _GisMapState extends State<GisMap> {
   //     _loadGeoJSON(file);
   //   }
   // }
-  @override
-  void initState() {
-    super.initState();
-    final url = 'http://123.100.226.123:1445/Mobile/gis';
-    _fetchURLList(url).then((urlList) {
-      _urlList = urlList;
-      _loadGeoJSON();
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   final url = 'http://123.100.226.123:1445/Mobile/gis';
+  //   _fetchURLList(url).then((urlList) {
+  //     _urlList = urlList;
+  //     _loadGeoJSON();
+  //   });
+  // }
 
   Widget build(BuildContext context) {
     // final polygonPoints = filledPoints ?? [];

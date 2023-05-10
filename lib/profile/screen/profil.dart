@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:elahan_kscs/appBar/appBar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart';
 import 'package:latlong2/latlong.dart';
@@ -9,7 +9,8 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../custom_routes.dart';
+import '../../constant.dart';
+import '../../dashboard/screen/menu_utama.dart';
 
 class Profil extends StatefulWidget {
   Profil({Key? key}) : super(key: key);
@@ -93,14 +94,58 @@ class _ProfilState extends State<Profil> {
     }
   }
 
+  Widget adminScaffold(BuildContext context, Widget body) {
+    return AdminScaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        title: const Text('Profil'),
+        actions: <Widget>[
+          SizedBox(
+            width: 50,
+            child: IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: (){
+                Navigator.pushReplacementNamed(context,'/profil');
+              },
+            ),
+          )
+        ],
+      ),
+      sideBar: SideBar(
+        backgroundColor: sideColor,
+        activeBackgroundColor: sideColor1,
+        borderColor: sideColor3,
+        iconColor: sideColorWhite,
+        activeIconColor: fourthColor,
+        textStyle: const TextStyle(
+          color: sideColorWhite,
+          fontSize: 13,
+        ),
+        activeTextStyle: const TextStyle(
+          color: fourthColor,
+          fontSize: 13,
+        ),
+        items: adminMenuItems,
+        // ModalRoute.of(context)?.settings.name ??
+        selectedRoute: '/profil',
+        onSelected: (item) {
+          if (item.route != null) {
+            Navigator.of(context).pushNamed(item.route!);
+          }
+        },
+      ),
+      body: body,
+    );
+  }
+
   Widget build(BuildContext context) {
     // final polygonPoints = filledPoints ?? [];
-    return Scaffold(
-      body: SafeArea(
+    return adminScaffold(context,
+       SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              MyAppBar(judul: 'Profil',),
               Text ("Profile"),
               Container(
                 padding: EdgeInsets.all(10),

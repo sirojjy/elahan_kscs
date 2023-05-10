@@ -2,8 +2,12 @@ import 'package:elahan_kscs/appBar/appBar.dart';
 import 'package:elahan_kscs/custom_routes.dart';
 import 'package:elahan_kscs/menu/inventarisasi/bloc/inventarisasi_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../constant.dart';
+import '../../../dashboard/screen/menu_utama.dart';
 
 class Inventarisasi extends StatefulWidget {
   const Inventarisasi({Key? key}) : super(key: key);
@@ -24,11 +28,56 @@ class _InventarisasiState extends State<Inventarisasi> {
     pref = await SharedPreferences.getInstance();
   }
 
+  ///Sidebar
+  Widget adminScaffold(BuildContext context, Widget body) {
+    return AdminScaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        title: const Text('Inventarisasi'),
+        actions: <Widget>[
+          SizedBox(
+            width: 50,
+            child: IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: (){
+                Navigator.pushReplacementNamed(context,'/inventarisasi');
+              },
+            ),
+          )
+        ],
+      ),
+      sideBar: SideBar(
+        backgroundColor: sideColor,
+        activeBackgroundColor: sideColor1,
+        borderColor: sideColor3,
+        iconColor: sideColorWhite,
+        activeIconColor: fourthColor,
+        textStyle: const TextStyle(
+          color: sideColorWhite,
+          fontSize: 13,
+        ),
+        activeTextStyle: const TextStyle(
+          color: fourthColor,
+          fontSize: 13,
+        ),
+        items: adminMenuItems,
+        // ModalRoute.of(context)?.settings.name ??
+        selectedRoute: '/inventarisasi',
+        onSelected: (item) {
+          if (item.route != null) {
+            Navigator.of(context).pushNamed(item.route!);
+          }
+        },
+      ),
+      body: body,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child:
+    return adminScaffold(context,
     Scaffold(
-      appBar: MyAppBar(judul:'Inventarisasi',),
       body: BlocBuilder<InventarisasiBloc, InventarisasiState>(
         builder: (context, state){
           return Container(
