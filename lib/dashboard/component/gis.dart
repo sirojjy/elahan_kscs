@@ -85,12 +85,13 @@ class _GisMapState extends State<GisMap> {
   //   }
   // }
   ///mengambil geojson dari URL
-  late List<List<LatLng>> filledPointsList = [];
   List<String> nisList = [];
   List<String> statusList = [];
   List<double> luasList = [];
   // Variabel yang akan menyimpan daftar URL dari API geojson
   late List<String> geoJsonName = [];
+  // Variabel menyimpan koordinat
+  late List<List<LatLng>> filledPointsList = [];
 
   @override
   void initState() {
