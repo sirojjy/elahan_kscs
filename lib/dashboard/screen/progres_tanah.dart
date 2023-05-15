@@ -22,12 +22,15 @@ class ProgresTanahAll extends StatelessWidget {
           ),
           // SizedBox(height: 10,),
           // GisMap(),
-          SizedBox(height: 10,),
-          GisMap(),
-          SizedBox(height: 10,),
-          DonutChart(),
+
           SizedBox(height: 10,),
           DonutChartBidang(),
+
+          SizedBox(height: 10,),
+          DonutChart(),
+
+          SizedBox(height: 10,),
+          GisMap(),
         ],
       ),
     );

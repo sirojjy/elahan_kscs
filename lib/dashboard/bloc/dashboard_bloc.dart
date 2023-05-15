@@ -45,10 +45,18 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         emit(
             state.copyWith(
               status: DashboardStateStatus.success,
+              ///total,
+              kebBidang: response['keb_bidang'],
+              kebLuas: response['keb_luas'],
+              bidangBebas: response['bidang_bebas'],
+              luasBebas: response['luas_bebas'],
+              persenBidang: response['persen_bidang'] ?? 0,
+              persenLuas: response['persen_luas'] ?? 0,
+              ///kategori
               lebak: response['lebak'],
               serang: response['serang'],
               tangerang: response['tang'],
-              // totalBidang: response['totalBidang'],
+              totalBidang: response['totalBidang'],
               luasLebak: response['luas_lebak'],
               luasSerang: response['luas_serang'],
               luasTangerang: response['luas_tang'],

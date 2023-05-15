@@ -10,11 +10,11 @@ List<AdminMenuItem> adminMenuItems = [
   const AdminMenuItem(
     title: 'Inventarisasi',
     route: '/inventarisasi',
-    icon: Icons.person,
+    icon: Icons.format_list_bulleted,
   ),
   const AdminMenuItem(
     title: 'Profil',
     route: '/profil',
-    icon: Icons.shopping_cart,
+    icon: Icons.person,
   ),
 ];

@@ -19,7 +19,7 @@ class GisMap extends StatefulWidget {
 }
 
 class _GisMapState extends State<GisMap> {
-  // late List<LatLng> filledPoints =[];
+  late List<LatLng> filledPoints =[];
   // Future<void> _loadGeoJSON(String file) async {
   //   final jsonString = await rootBundle.loadString('assets/bidang/9498.geojson');
   //   final geojson = json.decode(jsonString);
@@ -105,19 +105,21 @@ class _GisMapState extends State<GisMap> {
   Future<void> fetchGeoJSONNames() async {
     final url = 'http://123.100.226.123:1445/Mobile/gis';
     final response = await http.get(Uri.parse(url));
-    print('data respon $response');
+    print('data respon berhasil ${response.statusCode}');
     if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body) as List<dynamic>;
-      print('data jsonData $jsonData');
-      for (var data in jsonData) {
-        final linkGis = data['link_gis'] as String;
+      final jsonData = json.decode(response.body);
+      for (int i = 0; i<jsonData.length; i++) {
+        final linkGis = jsonData[i]['link_gis'];
         geoJsonName.add(linkGis);
+        // print('data loop ${jsonData[i]['link_gis']}');
       }
-      print('data jsonData $geoJsonName');
-      // Setelah mendapatkan nama-nama file GeoJSON, panggil fungsi untuk mengambil koordinat
+      // print('data jsonData $geoJsonName');
+      // // Setelah mendapatkan nama-nama file GeoJSON, panggil fungsi untuk mengambil koordinat
       fetchGeoJSONCoordinates();
     } else {
+      print('Masuk gagal ');
       throw Exception('Failed to fetch GeoJSON names');
+
     }
   }
 
@@ -125,24 +127,33 @@ class _GisMapState extends State<GisMap> {
 
 // Fungsi untuk mengambil data geojson dari URL dan memprosesnya
   Future<void> fetchGeoJSONCoordinates() async {
+
     for (var name in geoJsonName) {
+    // for (int i=0; i<13; i++) {
+    //   final url = 'http://123.100.226.123:1445/file_uploads/bidang/${geoJsonName[i]}';
       final url = 'http://123.100.226.123:1445/file_uploads/bidang/$name';
-      final response = await http.get(Uri.parse(url));
+      try {
+        final response = await http.get(Uri.parse(url));
+        // print('masuk respon 1 ${response.body}');
+        if (response.statusCode == 200) {
+          // print('masuk 1');
+          final geojson = json.decode(response.body);
 
-      if (response.statusCode == 200) {
-        final geojson = json.decode(response.body);
+          final feature = geojson['features'][0];
+          final coordinates = feature['geometry']['coordinates'][0];
+          final filledPoints = coordinates
+              .map<LatLng>((coord) => LatLng(coord[1], coord[0]))
+              .toList();
 
-        final feature = geojson['features'][0];
-        final coordinates = feature['geometry']['coordinates'][0];
-        final filledPoints = coordinates
-            .map<LatLng>((coord) => LatLng(coord[1], coord[0]))
-            .toList();
-
-        setState(() {
-          filledPointsList.add(filledPoints);
-        });
-      } else {
-        throw Exception('Failed to fetch GeoJSON coordinates');
+          setState(() {
+            filledPointsList.add(filledPoints);
+          });
+        } else {
+          // print('masuk 2');
+          throw Exception('Failed to fetch GeoJSON coordinates');
+        }
+      } catch (e) {
+        print('Error Fetching GeoJSON Coordinates: $e');
       }
     }
   }
@@ -167,7 +178,7 @@ class _GisMapState extends State<GisMap> {
   // }
 
   Widget build(BuildContext context) {
-    // final polygonPoints = filledPoints ?? [];
+    final polygonPoints = filledPoints;
     return Container(
         height: 250,
         decoration: BoxDecoration(
@@ -220,9 +231,161 @@ class _GisMapState extends State<GisMap> {
                     label: '$nisList',
                   )
                 ],
-              )
-            /// LOKASI TappablePolylineLayer
+              ),
 
+            /// LOKASI TappablePolylineLayer
+            TappablePolylineLayer(
+              polylines: [
+                TaggedPolyline(
+                  points: polygonPoints,
+                  color: Colors.transparent,
+                  strokeWidth: 20.0,
+                  tag: '001',
+                ),
+              ],
+              onTap: (point, polyline) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Center(child: Text('Data Bidang')),
+                      content: IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            Table(
+                              columnWidths: const <int, TableColumnWidth>{
+                                0: IntrinsicColumnWidth(),
+                                1: FlexColumnWidth(),
+                              },
+                              children: <TableRow>[
+                                TableRow(children: [
+                                  SizedBox(
+                                    height: 30,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 30),
+                                      child: Text(
+                                        'Desa',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                    child: Text(
+                                      ': CIUYAH',
+                                      style:
+                                      Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  SizedBox(
+                                    height: 30,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 30),
+                                      child: Text(
+                                        'NIB',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                    child: Text(
+                                      ': 00086',
+                                      style:
+                                      Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  SizedBox(
+                                    height: 30,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 30),
+                                      child: Text(
+                                        'Nama Pemilik',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                    child: Text(
+                                      ': ANIBAH',
+                                      style:
+                                      Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  SizedBox(
+                                    height: 30,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 30),
+                                      child: Text(
+                                        'Jenis Tanah',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                    child: Text(
+                                      ': Tanah Warga',
+                                      style:
+                                      Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  SizedBox(
+                                    height: 30,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 30),
+                                      child: Text(
+                                        'Luas Tanah',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                    child: Text(
+                                      ': 660 m2',
+                                      style:
+                                      Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                  ),
+                                ]),
+                              ],
+                            ),
+                            ElevatedButton(
+                                onPressed: () {Navigator.pushNamed(context, CustomRoutes.detailInventarisasi);}, child: Text('Lihat Detail'))
+                          ],
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
           ],
         )
     );
@@ -230,158 +393,7 @@ class _GisMapState extends State<GisMap> {
 }
 
 
-// TappablePolylineLayer(
-// polylines: [
-// TaggedPolyline(
-// points: polygonPoints,
-// color: Colors.transparent,
-// strokeWidth: 20.0,
-// tag: '001',
-// ),
-// ],
-// onTap: (point, polyline) {
-// showDialog(
-// context: context,
-// builder: (BuildContext context) {
-// return AlertDialog(
-// title: Center(child: Text('Data Bidang')),
-// content: IntrinsicHeight(
-// child: Column(
-// children: [
-// Table(
-// columnWidths: const <int, TableColumnWidth>{
-// 0: IntrinsicColumnWidth(),
-// 1: FlexColumnWidth(),
-// },
-// children: <TableRow>[
-// TableRow(children: [
-// SizedBox(
-// height: 30,
-// child: Padding(
-// padding: const EdgeInsets.only(right: 30),
-// child: Text(
-// 'Desa',
-// style: Theme.of(context)
-//     .textTheme
-//     .bodyLarge,
-// ),
-// ),
-// ),
-// SizedBox(
-// height: 30,
-// child: Text(
-// ': CIUYAH',
-// style:
-// Theme.of(context).textTheme.bodyLarge,
-// ),
-// ),
-// ]),
-// TableRow(children: [
-// SizedBox(
-// height: 30,
-// child: Padding(
-// padding: const EdgeInsets.only(right: 30),
-// child: Text(
-// 'NIB',
-// style: Theme.of(context)
-//     .textTheme
-//     .bodyLarge,
-// ),
-// ),
-// ),
-// SizedBox(
-// height: 30,
-// child: Text(
-// ': 00086',
-// style:
-// Theme.of(context).textTheme.bodyLarge,
-// ),
-// ),
-// ]),
-// TableRow(children: [
-// SizedBox(
-// height: 30,
-// child: Padding(
-// padding: const EdgeInsets.only(right: 30),
-// child: Text(
-// 'Nama Pemilik',
-// style: Theme.of(context)
-//     .textTheme
-//     .bodyLarge,
-// ),
-// ),
-// ),
-// SizedBox(
-// height: 30,
-// child: Text(
-// ': ANIBAH',
-// style:
-// Theme.of(context).textTheme.bodyLarge,
-// ),
-// ),
-// ]),
-// TableRow(children: [
-// SizedBox(
-// height: 30,
-// child: Padding(
-// padding: const EdgeInsets.only(right: 30),
-// child: Text(
-// 'Jenis Tanah',
-// style: Theme.of(context)
-//     .textTheme
-//     .bodyLarge,
-// ),
-// ),
-// ),
-// SizedBox(
-// height: 30,
-// child: Text(
-// ': Tanah Warga',
-// style:
-// Theme.of(context).textTheme.bodyLarge,
-// ),
-// ),
-// ]),
-// TableRow(children: [
-// SizedBox(
-// height: 30,
-// child: Padding(
-// padding: const EdgeInsets.only(right: 30),
-// child: Text(
-// 'Luas Tanah',
-// style: Theme.of(context)
-//     .textTheme
-//     .bodyLarge,
-// ),
-// ),
-// ),
-// SizedBox(
-// height: 30,
-// child: Text(
-// ': 660 m2',
-// style:
-// Theme.of(context).textTheme.bodyLarge,
-// ),
-// ),
-// ]),
-// ],
-// ),
-// ElevatedButton(
-// onPressed: () {Navigator.pushNamed(context, CustomRoutes.detailInventarisasi);}, child: Text('Lihat Detail'))
-// ],
-// ),
-// ),
-// actions: [
-// TextButton(
-// onPressed: () => Navigator.of(context).pop(),
-// child: Text('OK'),
-// ),
-// ],
-// );
-// },
-// );
-// },
-// ),
+
 
 // final filledPoints = <LatLng>[
 //   LatLng(-6.398649960024949, 106.3233937643756),

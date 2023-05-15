@@ -91,6 +91,5 @@ class _PieChartSerangState extends State<PieChartSerang> {
 class IssueData {
   final String? label;
   final double? nilai;
-
   IssueData({this.label, this.nilai});
 }

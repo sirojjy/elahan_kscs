@@ -12,10 +12,18 @@ extension DashboardInitial on DashboardStateStatus {
 class DashboardState extends Equatable {
   final DashboardStateStatus? status;
   final String? message;
+  ///total
+  final int kebBidang;
+  final double kebLuas;
+  final int bidangBebas;
+  final double luasBebas;
+  final double persenBidang;
+  final double persenLuas;
+  ///kategori
   final String? lebak;
   final String? serang;
   final String? tangerang;
-  // final int? totalBidang;
+  final int? totalBidang;
   final String? luasLebak;
   final String? luasSerang;
   final String? luasTangerang;
@@ -125,10 +133,18 @@ class DashboardState extends Equatable {
   const DashboardState({
     this.status = DashboardStateStatus.initial,
     this.message,
+    ///total,
+    this.kebBidang = 0,
+    this.kebLuas = 0,
+    this.bidangBebas = 0,
+    this.luasBebas = 0,
+    this.persenBidang = 0,
+    this.persenLuas = 0,
+    ///kategori
     this.lebak,
     this.serang,
     this.tangerang,
-    // this.totalBidang,
+    this.totalBidang,
     this.luasLebak,
     this.luasSerang,
     this.luasTangerang,
@@ -239,10 +255,18 @@ class DashboardState extends Equatable {
   List<Object?> get props => [
     status,
     message,
+    ///total,
+    kebBidang,
+    kebLuas,
+    bidangBebas,
+    luasBebas,
+    persenBidang,
+    persenLuas,
+    ///kategori
     lebak,
     serang,
     tangerang,
-    // totalBidang,
+    totalBidang,
     luasLebak,
     luasSerang,
     luasTangerang,
@@ -351,10 +375,18 @@ class DashboardState extends Equatable {
   DashboardState copyWith({
     DashboardStateStatus? status,
     String? message,
+    ///total,
+    int? kebBidang,
+    double? kebLuas,
+    int? bidangBebas,
+    double? luasBebas,
+    double? persenBidang,
+    double? persenLuas,
+    ///kategori
     String? lebak,
     String? serang,
     String? tangerang,
-    // int? totalBidang,
+    int? totalBidang,
     String? luasLebak,
     String? luasSerang,
     String? luasTangerang,
@@ -462,10 +494,18 @@ class DashboardState extends Equatable {
     return DashboardState(
       status: status ?? this.status,
       message: message ?? this.message,
+      ///total,
+      kebBidang: kebBidang ?? this.kebBidang,
+      kebLuas: kebLuas ?? this.kebLuas,
+      bidangBebas: bidangBebas ?? this.bidangBebas,
+      luasBebas: luasBebas ?? this.luasBebas,
+      persenBidang: persenBidang ?? this.persenBidang,
+      persenLuas: persenLuas ?? this.persenLuas,
+      ///kategori
       lebak: lebak ?? this.lebak,
       serang: serang ?? this.serang,
       tangerang: tangerang ?? this.tangerang,
-      // totalBidang: totalBidang ?? this.totalBidang,
+      totalBidang: totalBidang ?? this.totalBidang,
       luasLebak: luasLebak ?? this.luasLebak,
       luasSerang: luasSerang ?? this.luasSerang,
       luasTangerang: luasTangerang ?? this.luasTangerang,

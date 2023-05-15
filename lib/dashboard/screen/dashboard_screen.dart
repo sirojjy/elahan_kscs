@@ -14,21 +14,53 @@ import '../../profile/screen/profil.dart';
 import 'menu_utama.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+  DashboardScreen({Key? key}) : super(key: key);
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-
+  void onChanged(String value) {
+    // Lakukan sesuatu ketika opsi dropdown berubah
+    print(value);
+  }
   Widget adminScaffold(BuildContext context, Widget body) {
+    String? selectedOption;
+
+    List<String> options = [
+      'Lebak',
+      'Serang',
+      'Tangerang',
+    ];
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: const Text('Dashboard'),
         actions: <Widget>[
+          SizedBox(
+            width: 100,
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: selectedOption,
+                icon: Icon(Icons.tune, color: Colors.white,),
+                items: options.map((String option) {
+                  return DropdownMenuItem<String>(
+                    value: option,
+                    child: Text(option),
+                  );
+                }).toList(),
+                onChanged: (String? value) {
+                  setState(() {
+                    selectedOption = value;
+                  });
+                  onChanged(value!);
+                },
+                isExpanded: true,
+              ),
+            ),
+          ),
           SizedBox(
             width: 50,
             child: IconButton(
@@ -93,17 +125,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return adminScaffold(
       context,
-        SafeArea(
+        const SafeArea(
           child: Center(
             child: SingleChildScrollView(
               child: Column(
-                children:  const [
+                children:  [
                   SizedBox(height: 10,),
-
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(child: Text('Total Progres Keseluruhan', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),),
-                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.all(8.0),
+                  //   child: Center(child: Text('Total Progres Keseluruhan', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),),
+                  // ),
                   ProgresTanahAll(),
                   SizedBox(height: 10,),
 

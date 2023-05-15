@@ -39,9 +39,31 @@ class _InventarisasiState extends State<Inventarisasi> {
           SizedBox(
             width: 50,
             child: IconButton(
-              icon: const Icon(Icons.person),
-              onPressed: (){
-                Navigator.pushReplacementNamed(context,'/inventarisasi');
+              icon: Icon(Icons.logout),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Konfirmasi Logout'),
+                      content: Text('Apakah Anda yakin ingin logout?'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('Batal'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        TextButton(
+                          child: Text('Logout'),
+                          onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(context, '/logout', (route) => false);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
             ),
           )
